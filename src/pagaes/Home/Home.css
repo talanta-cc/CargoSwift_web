@@ -1,0 +1,42 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+.homepage {
+    display: flex;
+    color: white;
+    font-size: 24px;
+    overflow: hidden;
+}
+
+.homepage::before {
+    content: '';
+    position: absolute;
+    top: 74px;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-image: url('../../assets/images/homebackgroundcargo.jpg');
+    background-size: cover;
+    background-position: center;
+    opacity: 1.5; 
+    z-index: -1; 
+}
+.home_contents{
+    margin-top: 10%;
+    margin-left: 10%;
+}
+.home_contents h2{
+    font-size: 35px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+.home_contents p{
+    font-size: 17px;
+    margin-top: 10px;
+}
+.home_btn{
+    padding: 15px;
+    width: 40%;
+    margin-top: 10px;
+    background-color: yellow;
+}
