@@ -1,27 +1,52 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Navbar.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFacebook, faTwitter, faInstagram } from '@fortawesome/free-brands-svg-icons';
+import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faFacebook, faTwitter, faInstagram, faLinkedin } from '@fortawesome/free-brands-svg-icons';
+import { Link } from 'react-router-dom';
 
 const Navbar = () => {
+    const [menuOpen, setMenuOpen] = useState(false);
+
+    const handleMenuToggle = () => {
+        setMenuOpen(!menuOpen);
+    };
+
     return (
         <nav className="navbar">
-            <div className="navbar-links">
-                <a href="/home">Home</a>
-                <a href="/about">About Us</a>
-                <a href="/services">Pages</a>
-                <a href="/projects">Projects</a>
-                <a href="/contact">Contact </a>
+            <div className="hamburger-menu" onClick={handleMenuToggle}>
+                {menuOpen ? <FontAwesomeIcon icon={faTimes} /> : <FontAwesomeIcon icon={faBars} />}
+            </div>
+            <div className={`navbar-links ${menuOpen ? 'open' : ''}`}>
+                <Link to="/">Home</Link>
+                <Link to="/about">About Us</Link>
+                <div className="dropdown">
+                    <Link to="#" className="dropdown-link">Pages</Link>
+                    <div className="dropdown-content">
+                        <Link to="/">Home</Link>
+                        <Link to="/about">AboutUs</Link>
+                        <Link to="/services">Services</Link>
+                        <Link to="/projects">Projects</Link>
+                        <Link to="/contact">Contact</Link>
+                    </div>
+                </div>
+                <Link to="/projects">Projects</Link>
+                <Link to="/contact">Contact</Link>
             </div>
             <div className="navbar-links-right">
-                <a href="https://instagram.com">
+                <Link to="/login">Login</Link>
+                <Link to="/signup">SignUp</Link>
+                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
                     <FontAwesomeIcon icon={faInstagram} />
                 </a>
-                <a href="https://facebook.com">
-                    <FontAwesomeIcon icon={faFacebook} /> 
+                <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
+                    <FontAwesomeIcon icon={faFacebook} />
                 </a>
-                <a href="https://twitter.com">
-                    <FontAwesomeIcon icon={faTwitter} /> 
+                <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">
+                    <FontAwesomeIcon icon={faTwitter} />
+                </a>
+                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
+                    <FontAwesomeIcon icon={faLinkedin} />
                 </a>
                 <div className="request-quote">
                     <p>Request Quote</p>

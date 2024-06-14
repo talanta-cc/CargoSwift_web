@@ -1,5 +1,5 @@
-import React from 'react'
-import './Home.css'
+import React from 'react';
+import './Home.css';
 
 function Home() {
   return (
@@ -25,4 +25,4 @@ function Home() {
   )
 }
 
-export default Home
+export default Home;
