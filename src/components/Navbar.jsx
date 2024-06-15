@@ -24,7 +24,7 @@ const Navbar = () => {
                     <Link to="#" className="dropdown-link">Pages</Link>
                     <div className="dropdown-content">
                         <Link to="/">Home</Link>
-                        <Link to="/about">AboutUs</Link>
+                        <Link to="/about">About Us</Link>
                         <Link to="/services">Services</Link>
                         <Link to="/projects">Projects</Link>
                         <Link to="/contact">Contact</Link>
@@ -36,18 +36,20 @@ const Navbar = () => {
             <div className="navbar-links-right">
                 <Link to="/login">Login</Link>
                 <Link to="/signup">SignUp</Link>
-                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
-                    <FontAwesomeIcon icon={faInstagram} />
-                </a>
-                <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
-                    <FontAwesomeIcon icon={faFacebook} />
-                </a>
-                <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">
-                    <FontAwesomeIcon icon={faTwitter} />
-                </a>
-                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
-                    <FontAwesomeIcon icon={faLinkedin} />
-                </a>
+                <div className="social-media">
+                    <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
+                        <FontAwesomeIcon icon={faInstagram} />
+                    </a>
+                    <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
+                        <FontAwesomeIcon icon={faFacebook} />
+                    </a>
+                    <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">
+                        <FontAwesomeIcon icon={faTwitter} />
+                    </a>
+                    <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
+                        <FontAwesomeIcon icon={faLinkedin} />
+                    </a>
+                </div>
                 <div className="request-quote">
                     <p>Request Quote</p>
                 </div>
