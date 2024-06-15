@@ -56,8 +56,6 @@
 .icon-wrapper i {
     color: yellow;
 }
-
-/* Footer Styles */
 .footer-wrapper {
     background-color: #3e265f;
     padding: 20px;
@@ -84,7 +82,7 @@
     }
 
     .contact-wrapper .logo {
-        margin-bottom: 0px;
+        margin-bottom: -60px;
     }
 
     .contact-wrapper .contact {

@@ -39,7 +39,7 @@ body {
 }
 
 .navbar-links a:hover, .navbar-links-right a:hover {
-    text-decoration: underline; 
+    text-decoration: underline;
 }
 
 .navbar-links-right a {
@@ -90,6 +90,11 @@ body {
 
 .dropdown:hover .dropdown-content {
     display: flex;
+}
+
+.social-media {
+    display: flex;
+    gap: 0.5rem;
 }
 
 @media (max-width: 992px) {
@@ -146,10 +151,6 @@ body {
         margin-top: 10px;
     }
 
-    .navbar-links-right .social-media {
-        display: none;
-    }
-
     .request-quote {
         height: 35px;
         width: 80px;
@@ -162,6 +163,10 @@ body {
         text-align: center;
         align-items: center;
         margin-top: -5px;
+    }
+
+    .social-media {
+        display: none;
     }
 }
 
