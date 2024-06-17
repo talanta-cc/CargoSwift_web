@@ -7,7 +7,7 @@ function Header() {
       <div className="contact-wrapper">
         <div className="logo">
           <i className="fa-solid fa-thin fa-cubes"></i>
-          <p>TransitFlow</p>
+          <p>CargoSwift</p>
         </div>
         <div className="contact">
           <div className="info opening-hours">
