@@ -14,9 +14,7 @@ const Navbar = () => {
     };
 
     const handleLogout = () => {
-        // Add your logout logic here
         console.log('User logged out');
-        // Redirect to home or login page after logout
         navigate('/login');
     };
 
@@ -39,6 +37,7 @@ const Navbar = () => {
                 </div>
                 <Link to="/contact">Contact</Link>
                 <Link to="/about">About Us</Link>
+                <Link to="/orders">Orders</Link>
             </div>
             <div className="navbar-links-right">
                 <Link to="/login">Login</Link>
