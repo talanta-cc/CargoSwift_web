@@ -9,7 +9,7 @@ body {
     font-size: 24px;
     overflow: hidden;
     position: relative;
-    height: 80vh;
+    height: 90vh;
 }
 
 .homepage::before {
@@ -46,8 +46,117 @@ body {
     padding: 15px;
     width: 40%;
     margin-top: 10px;
+    margin-bottom: 10px;
     background-color: yellow;
 }
+.homepage_contents{
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-top: 30px;
+    display: flex;
+    margin-bottom: 30px;
+    justify-content: space-between;
+}
+.what_wedo{
+    background-color: rgb(200, 241, 123);
+    padding: 5px;
+    margin-bottom: 10px;
+    width: 75px;
+}
+.what_wedo h5{
+    font-size: 10px;
+}
+.col_1 h3{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 30px;
+    font-weight: bold;
+} 
+.sea_services{
+    display: flex;
+}
+.air_services{
+    display: flex;
+}
+.warehouse_services{
+    display: flex;
+}
+.local_services{
+    display: flex;
+}
+.sea_contents{
+    margin-left: 20px;
+}
+.warehouse_contents{
+    margin-left: 20px;
+}
+.warehouse_contents h4{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 20px;
+    font-weight: bold;
+}
+.local_contents h4{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 20px;
+    font-weight: bold;
+}
+.local_contents{
+    margin-left: 20px;
+}
+.air_contents{
+    margin-left: 20px;
+}
+.sea_contents h4{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 20px;
+    font-weight: bold;
+}
+.air_contents h4{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 20px;
+    font-weight: bold;
+}
+.sea_contents p{
+    margin-top: 10px;
+    font-size: 13px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-style: italic;
+    margin-bottom: 10px;
+}
+.air_contents p{
+    margin-top: 10px;
+    font-size: 13px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-style: italic;
+    margin-bottom: 10px;
+}
+.warehouse_contents p{
+    margin-top: 10px;
+    font-size: 13px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-style: italic;
+    margin-bottom: 10px;
+}
+.local_contents p{
+    margin-top: 10px;
+    font-size: 13px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-style: italic;
+    margin-bottom: 10p
+}
+.last_part{
+    content: '';
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-image: url('../../assets/images/cargo-ship.jpg');
+    background-size: cover;
+    height: 50vh;
+    background-position: center;
+    opacity: 1.5; 
+    z-index: -1; 
+}
+
 @media (max-width: 768px) {
     .homepage {
         flex-direction: column;

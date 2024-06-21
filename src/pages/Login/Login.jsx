@@ -10,14 +10,16 @@ const Login = () => {
     const email = e.target.email.value;
     const password = e.target.password.value;
 
-    console.log(email);
-
     let storedemail = localStorage.getItem("email");
     let storedpassword = localStorage.getItem("password");
+    let storedusername = localStorage.getItem("username");
 
     if (storedemail === email && storedpassword === password) {
       localStorage.setItem("stored", 1);
-      navigate("/home");
+      localStorage.setItem("user", JSON.stringify({ name: storedusername, email })); // store user data
+      navigate("/profile");
+    } else {
+      alert("Invalid login credentials");
     }
   };
 

@@ -3,13 +3,21 @@ import './Navbar.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { faFacebook, faTwitter, faInstagram, faLinkedin } from '@fortawesome/free-brands-svg-icons';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
     const [menuOpen, setMenuOpen] = useState(false);
+    const navigate = useNavigate();
 
     const handleMenuToggle = () => {
         setMenuOpen(!menuOpen);
+    };
+
+    const handleLogout = () => {
+        // Add your logout logic here
+        console.log('User logged out');
+        // Redirect to home or login page after logout
+        navigate('/login');
     };
 
     return (
@@ -19,9 +27,8 @@ const Navbar = () => {
             </div>
             <div className={`navbar-links ${menuOpen ? 'open' : ''}`}>
                 <Link to="/">Home</Link>
-                <Link to="/about">About Us</Link>
                 <div className="dropdown">
-                    <Link to="#" className="dropdown-link">Pages</Link>
+                    <Link to="#" className="dropdown-link">Trucks</Link>
                     <div className="dropdown-content">
                         <Link to="/">Home</Link>
                         <Link to="/about">About Us</Link>
@@ -30,12 +37,14 @@ const Navbar = () => {
                         <Link to="/contact">Contact</Link>
                     </div>
                 </div>
-                <Link to="/projects">Projects</Link>
                 <Link to="/contact">Contact</Link>
+                <Link to="/about">About Us</Link>
             </div>
             <div className="navbar-links-right">
                 <Link to="/login">Login</Link>
                 <Link to="/signup">SignUp</Link>
+                <Link to="/profile">Profile</Link>
+                <button onClick={handleLogout} className="logout-button">Logout</button> 
                 <div className="social-media">
                     <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
                         <FontAwesomeIcon icon={faInstagram} />
