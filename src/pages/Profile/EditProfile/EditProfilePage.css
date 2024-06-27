@@ -57,3 +57,62 @@
     background-color: #0056b3;
   }
   
+  /* Responsive Adjustments */
+  @media (max-width: 768px) {
+    .edit-profile-page {
+      padding: 15px;
+    }
+  
+    .edit-profile-page h1 {
+      font-size: 1.8em;
+    }
+  
+    .edit-profile-page form div {
+      margin-bottom: 10px;
+    }
+  
+    .edit-profile-page label {
+      font-size: 0.9em;
+    }
+  
+    .edit-profile-page input {
+      padding: 8px;
+      font-size: 0.9em;
+    }
+  
+    .edit-profile-page button {
+      width: 100%;
+      padding: 10px;
+      font-size: 1em;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .edit-profile-page {
+      padding: 10px;
+    }
+  
+    .edit-profile-page h1 {
+      font-size: 1.5em;
+    }
+  
+    .edit-profile-page form div {
+      margin-bottom: 8px;
+    }
+  
+    .edit-profile-page label {
+      font-size: 0.8em;
+    }
+  
+    .edit-profile-page input {
+      padding: 6px;
+      font-size: 0.8em;
+    }
+  
+    .edit-profile-page button {
+      width: 100%;
+      padding: 8px;
+      font-size: 0.9em;
+    }
+  }
+  

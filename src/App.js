@@ -13,6 +13,7 @@ import ProfilePage from './pages/Profile/ProfilePage/ProfilePage';
 import EditProfilePage from './pages/Profile/EditProfile/EditProfilePage';
 import ChangePasswordPage from './pages/Profile/ChangePasswordPage/ChangePasswordPage';
 import OrderList from './pages/Orders/OrderList'; 
+import TrucksPage from './pages/Trucks/TrucksPage';
 
 const App = () => {
   const [user, setUser] = useState({ name: '', email: '' });
@@ -35,6 +36,7 @@ const App = () => {
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path='/trucks' element={<TrucksPage/>}/>
         <Route path="/about" element={<About />} />
         <Route path="/projects" element={<Projects />} />
         <Route path="/contact" element={<Contact />} />

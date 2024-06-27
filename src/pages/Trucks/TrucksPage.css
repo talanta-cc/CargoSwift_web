@@ -1,0 +1,145 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f0f2f5;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .trucks-page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  .journey-details {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .journey-input {
+    display: flex;
+    flex-direction: column;
+    margin-right: 20px;
+  }
+  
+  .journey-input label {
+    margin-bottom: 8px;
+    color: #333;
+    font-weight: bold;
+  }
+  
+  .journey-input input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .trucks-page-content {
+    display: flex;
+  }
+  
+  .filters {
+    flex: 1;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-right: 20px;
+  }
+  
+  .filters h2 {
+    color: #666;
+    margin-bottom: 20px;
+  }
+  
+  .filters label {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 16px;
+    color: #333;
+  }
+  
+  .vehicle-type-checkbox {
+    margin-right: 10px;
+  }
+  
+  .main-content {
+    flex: 3;
+  }
+  
+  .controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  #search-input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-right: 10px;
+  }
+  
+  #sort-select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-right: 10px;
+  }
+  
+  #filter-button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  #filter-button:hover {
+    background-color: #0056b3;
+  }
+  
+  .trucks-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  .filters .filter1{
+    display: flex;
+    justify-content: space-between;
+  }
+  .filters .filter1 p{
+    margin-top: 8px;
+    font-size: 15px;
+  }
+  .truck-card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    margin-bottom: 20px;
+    display: flex;
+    padding: 20px;
+  }
+  
+  .truck-card h2 {
+    margin: 10px 0;
+    padding: 0 10px;
+    font-size: 18px;
+    color: #333;
+  }
+  
+  .truck-card p {
+    padding: 0 10px 10px;
+    color: #666;
+    font-size: 14px;
+  }
+  
