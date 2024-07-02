@@ -16,7 +16,7 @@ const ProfilePage = () => {
   }, [navigate]);
 
   const handleLogout = () => {
-    localStorage.removeItem('stored');
+    localStorage.removeItem('token');
     localStorage.removeItem('user');
     console.log('User logged out');
     navigate('/login');
@@ -43,4 +43,3 @@ const ProfilePage = () => {
 };
 
 export default ProfilePage;
-

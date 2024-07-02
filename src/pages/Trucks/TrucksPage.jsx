@@ -1,128 +1,119 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './TrucksPage.css';
+import Truck from './TruckPage';
 
-function TrucksPage() {
-  const [filters, setFilters] = useState({
-    classic: false,
-    couch: false,
-    'ac-vehicle': false,
-  });
+const Trucks = () => {
+  const [trucks] = useState([
+  ]);
 
-  const handleCheckboxChange = (event) => {
-    const { value, checked } = event.target;
-    setFilters({
-      ...filters,
-      [value]: checked,
-    });
+  const [pickup, setPickup] = useState('Pickup Point');
+  const [droppingPoint, setDroppingPoint] = useState('Dropping Point');
+  const [date, setDate] = useState('');
+  const [typeAC, setTypeAC] = useState(false);
+  const [typeClassic, setTypeClassic] = useState(false);
+  const [typeCoach, setTypeCoach] = useState(false);
+  const [filteredTrucks, setFilteredTrucks] = useState(trucks);
+
+  const handleFilterChange = (type, checked) => {
+    switch (type) {
+      case 'AC':
+        setTypeAC(checked);
+        break;
+      case 'Classic':
+        setTypeClassic(checked);
+        break;
+      case 'Coach':
+        setTypeCoach(checked);
+        break;
+      default:
+        break;
+    }
   };
 
-  const truckData = [
-    {
-      name: 'Truck 1',
-      type: 'classic',
-      description: 'Classic Truck description and specifications.',
-      time: '8.00am - 4.30pm',
-      offDays: 'Friday',
-    },
-    {
-      name: 'Truck 2',
-      type: 'couch',
-      description: 'Couch Truck description and specifications.',
-      time: '9.00am - 5.00pm',
-      offDays: 'Saturday',
-    },
-    {
-      name: 'Truck 3',
-      type: 'ac-vehicle',
-      description: 'AC Vehicle description and specifications.',
-      time: '8.00am - 4.30pm',
-      offDays: 'Friday',
-    },
-  ];
+  const filterTrucks = () => {
+    let updatedTrucks = trucks.filter(truck => {
+      const matchPickup = pickup === 'Pickup Point' || truck.tripDetails.startLocation.includes(pickup);
+      const matchDrop = droppingPoint === 'Dropping Point' || truck.tripDetails.destinationLocation.includes(droppingPoint);
+      const matchDate = date === '' || truck.tripDetails.startTime.includes(date);
+      return matchPickup && matchDrop && matchDate;
+    });
 
-  const filteredTrucks = truckData.filter(truck => filters[truck.type]);
+    updatedTrucks = updatedTrucks.filter(truck => {
+      return (
+        (typeAC && truck.type === 'AC') ||
+        (typeClassic && truck.type === 'Classic') ||
+        (typeCoach && truck.type === 'Coach') ||
+        (!typeAC && !typeClassic && !typeCoach)
+      );
+    });
+
+    setFilteredTrucks(updatedTrucks);
+  };
+
+  useEffect(() => {
+    filterTrucks();
+  }, [pickup, droppingPoint, date, typeAC, typeClassic, typeCoach]);
+
+  const submitForm = (e) => {
+    e.preventDefault();
+    filterTrucks();
+  };
 
   return (
-    <div className="trucks-page">
-      <div className="journey-details">
-        <div className="journey-input">
-          <label htmlFor="pickup-point">Pickup Point</label>
-          <input type="text" id="pickup-point" placeholder="Enter pickup point" />
-        </div>
-        <div className="journey-input">
-          <label htmlFor="dropping-point">Dropping Point</label>
-          <input type="text" id="dropping-point" placeholder="Enter dropping point" />
-        </div>
-        <div className="journey-input">
-          <label htmlFor="date-of-journey">Date of Journey</label>
-          <input type="date" id="date-of-journey" />
-        </div>
+    <div className='container'>
+      <div className='header'>
+        <form onSubmit={submitForm}>
+          <select name="pickup-point" onChange={e => setPickup(e.target.value)} value={pickup}>
+            <option value="Pickup Point">--Pickup Point--</option>
+            <option value="California">California</option>
+            <option value="Washington DC">Washington DC</option>
+            <option value="New York">New York</option>
+            <option value="Los Angeles">Los Angeles</option>
+            <option value="Dakota">Dakota</option>
+            <option value="Kansas">Kansas</option>
+          </select>
+
+          <select name="Dropping-point" value={droppingPoint} onChange={e => setDroppingPoint(e.target.value)}>
+            <option value="Dropping Point">--Dropping Point--</option>
+            <option value="California">California</option>
+            <option value="Washington DC">Washington DC</option>
+            <option value="New York">New York</option>
+            <option value="Los Angeles">Los Angeles</option>
+            <option value="Texas">Texas</option>
+          </select>
+          <input type="date" value={date} onChange={e => setDate(e.target.value)} />
+          <button type='submit'>Find</button>
+        </form>
       </div>
-
-      <div className="trucks-page-content">
-        <div className="filters">
-          <div className="filter1">
-          <h2>Filter by Type </h2> 
-          <p>Reset All</p>
-          </div><hr />
-          <h2>Vehicle Type</h2>
-          <label>
-            <input
-              type="checkbox"
-              value="classic"
-              className="vehicle-type-checkbox"
-              onChange={handleCheckboxChange}
-            /> Classic
-          </label>
-          <label>
-            <input
-              type="checkbox"
-              value="couch"
-              className="vehicle-type-checkbox"
-              onChange={handleCheckboxChange}
-            /> Couch
-          </label>
-          <label>
-            <input
-              type="checkbox"
-              value="ac-vehicle"
-              className="vehicle-type-checkbox"
-              onChange={handleCheckboxChange}
-            /> AC-vehicle
-          </label>
+      <div className="main">
+        <div className="filter">
+          <div className="title">
+            <h1>Filter</h1>
+            <small onClick={() => { setTypeAC(false); setTypeClassic(false); setTypeCoach(false); }}>Reset All</small>
+          </div>
+          <hr />
+          <h4>Vehicle Type</h4>
+          <div className="choices">
+            <input type="checkbox" checked={typeClassic} onChange={e => handleFilterChange('Classic', e.target.checked)} />
+            <label>Classic</label>
+          </div>
+          <div className="choices">
+            <input type="checkbox" checked={typeCoach} onChange={e => handleFilterChange('Coach', e.target.checked)} />
+            <label>Coach</label>
+          </div>
+          <div className="choices">
+            <input type="checkbox" checked={typeAC} onChange={e => handleFilterChange('AC', e.target.checked)} />
+            <label>AC</label>
+          </div>
         </div>
-
-        <div className="main-content">
-          <div className="controls">
-            <input type="text" id="search-input" placeholder="Search trucks..." />
-            <select id="sort-select">
-              <option value="name-asc">Sort by Name (A-Z)</option>
-              <option value="name-desc">Sort by Name (Z-A)</option>
-            </select>
-            <button id="filter-button">Filter</button>
-          </div>
-
-          <div className="trucks-container" id="trucks-container">
-            {(filteredTrucks.length > 0 ? filteredTrucks : truckData).map((truck, index) => (
-              <div className="truck-card" key={index} data-name={truck.name} data-type={truck.type}>
-                <div className="trucks_names">
-                <h2>{truck.name}</h2>
-                </div>
-                {filters[truck.type] && (
-                  <>
-                    <p>{truck.description}</p>
-                    <p><strong>Time:</strong> {truck.time}</p>
-                    <p><strong>Off Days:</strong> {truck.offDays}</p>
-                  </>
-                )}
-              </div>
-            ))}
-          </div>
+        <div className="data">
+          {filteredTrucks.map(truck => (
+            <Truck truck={truck} key={truck.id} />
+          ))}
         </div>
       </div>
     </div>
   );
-}
+};
 
-export default TrucksPage;
-
+export default Trucks;

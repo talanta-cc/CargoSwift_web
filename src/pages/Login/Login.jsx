@@ -5,21 +5,32 @@ import { useNavigate, Link } from 'react-router-dom';
 const Login = () => {
   const navigate = useNavigate(); 
 
-  const submit = (e) => {
+  const submit = async (e) => {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
 
-    let storedemail = localStorage.getItem("email");
-    let storedpassword = localStorage.getItem("password");
-    let storedusername = localStorage.getItem("username");
+    try {
+      const response = await fetch('https://cargoswift.talantacomputeschoo.com/api/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      });
 
-    if (storedemail === email && storedpassword === password) {
-      localStorage.setItem("stored", 1);
-      localStorage.setItem("user", JSON.stringify({ name: storedusername, email })); // store user data
-      navigate("/profile");
-    } else {
-      alert("Invalid login credentials");
+      const result = await response.json();
+
+      if (result.error) {
+        alert(result.message);
+      } else {
+        alert("Login successful!");
+        localStorage.setItem('token', result.data.token); 
+        localStorage.setItem('user', JSON.stringify({ name: result.data.name, email }));
+        navigate("/profile");
+      }
+    } catch (error) {
+      alert("An error occurred. Please try again.");
     }
   };
 

@@ -5,9 +5,14 @@ function Signup() {
   const [details, setDetails] = useState({
     username: "",
     email: "",
+    phone_number: "",
+    role: "user",
     password: "",
     confirmPassword: "",
   });
+
+  const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(null);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -17,18 +22,53 @@ function Signup() {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const { username, email, password, confirmPassword } = details;
-    console.log(details);
+    const { username, email, phone_number, role, password, confirmPassword } = details;
+
     if (password !== confirmPassword) {
-      alert("Passwords do not match");
+      setError("Passwords do not match");
       return;
     }
-    localStorage.setItem("username", username);
-    localStorage.setItem("email", email);
-    localStorage.setItem("password", password);
-    alert("Registration Successful!");
+
+    try {
+      const response = await fetch('https://cargoswift.talantacomputeschoo.com/api/auth/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: username,
+          email,
+          phone_number,
+          role,
+          password,
+        }),
+      });
+
+      const result = await response.json();
+
+      console.log('Response:', response);
+      console.log('Result:', result);
+
+      if (!response.ok) {
+        setError(result.message || "An error occurred. Please try again.");
+      } else {
+        setSuccess("Registration Successful!");
+        setError(null);
+        setDetails({
+          username: "",
+          email: "",
+          phone_number: "",
+          role: "user",
+          password: "",
+          confirmPassword: "",
+        });
+      }
+    } catch (error) {
+      console.error("Registration Error:", error); 
+      setError("An error occurred. Please try again.");
+    }
   };
 
   return (
@@ -56,6 +96,23 @@ function Signup() {
           />
         </div>
         <div className="form-group">
+          <label>Phone Number:</label>
+          <input
+            type="text"
+            name="phone_number"
+            value={details.phone_number}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label>Role:</label>
+          <select name="role" value={details.role} onChange={handleChange} required>
+            <option value="user">User</option>
+            <option value="trucker">Trucker</option>
+          </select>
+        </div>
+        <div className="form-group">
           <label>Password:</label>
           <input
             type="password"
@@ -76,6 +133,8 @@ function Signup() {
           />
         </div>
         <button type="submit" className='signup_btn'>Register</button>
+        {error && <p style={{ color: 'red' }}>{error}</p>}
+        {success && <p style={{ color: 'green' }}>{success}</p>}
       </form>
     </div>
   );

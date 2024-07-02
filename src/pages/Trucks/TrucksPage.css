@@ -4,142 +4,167 @@ body {
     margin: 0;
     padding: 0;
   }
-  
-  .trucks-page {
+  body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f0f2f5;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
     max-width: 1200px;
-    margin: 0 auto;
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-top: 30px;
+    font-family: Arial, sans-serif;
+    padding: 0 15px;
+}
+
+.header {
+    background-color: #f8f8f8;
     padding: 20px;
-  }
-  .journey-details {
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.header form {
     display: flex;
-    justify-content: space-between;
+    flex-wrap: wrap;
     align-items: center;
-    margin-bottom: 20px;
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
-  .journey-input {
-    display: flex;
-    flex-direction: column;
-    margin-right: 20px;
-  }
-  
-  .journey-input label {
-    margin-bottom: 8px;
-    color: #333;
-    font-weight: bold;
-  }
-  
-  .journey-input input {
+    gap: 15px;
+}
+
+.header select,
+.header input[type="date"],
+.header button {
     padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-  
-  .trucks-page-content {
-    display: flex;
-  }
-  
-  .filters {
-    flex: 1;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    margin-right: 20px;
-  }
-  
-  .filters h2 {
-    color: #666;
-    margin-bottom: 20px;
-  }
-  
-  .filters label {
-    display: block;
-    margin-bottom: 10px;
     font-size: 16px;
-    color: #333;
-  }
-  
-  .vehicle-type-checkbox {
-    margin-right: 10px;
-  }
-  
-  .main-content {
-    flex: 3;
-  }
-  
-  .controls {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-  }
-  
-  #search-input {
+    border: 1px solid #ddd;
+    border-radius: 4px;
     flex: 1;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    margin-right: 10px;
-  }
-  
-  #sort-select {
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    margin-right: 10px;
-  }
-  
-  #filter-button {
-    padding: 10px 20px;
+    min-width: 150px;
+}
+
+.header button {
     background-color: #007bff;
-    color: #fff;
+    color: white;
     border: none;
-    border-radius: 4px;
     cursor: pointer;
-  }
-  
-  #filter-button:hover {
+}
+
+.header button:hover {
     background-color: #0056b3;
-  }
-  
-  .trucks-container {
+}
+
+.main {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
-  }
-  .filters .filter1{
+}
+
+.filter {
+    flex: 1;
+    min-width: 200px;
+    background-color: #f8f8f8;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.filter .title {
     display: flex;
     justify-content: space-between;
-  }
-  .filters .filter1 p{
-    margin-top: 8px;
-    font-size: 15px;
-  }
-  .truck-card {
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    margin-bottom: 20px;
+    align-items: center;
+}
+
+.filter h1 {
+    margin: 0;
+}
+
+.filter small {
+    cursor: pointer;
+    color: #007bff;
+}
+
+.filter small:hover {
+    text-decoration: underline;
+}
+
+.filter hr {
+    margin: 15px 0;
+    border: 0;
+    border-top: 1px solid #ddd;
+}
+
+.filter h4 {
+    margin-bottom: 10px;
+}
+
+.filter .choices {
     display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.data {
+    flex: 3;
+    background-color: #fff;
     padding: 20px;
-  }
-  
-  .truck-card h2 {
-    margin: 10px 0;
-    padding: 0 10px;
-    font-size: 18px;
-    color: #333;
-  }
-  
-  .truck-card p {
-    padding: 0 10px 10px;
-    color: #666;
-    font-size: 14px;
-  }
-  
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.data .item {
+    padding: 20px;
+    background-color: white;
+    margin-bottom: 20px;
+    border-radius: 10px;
+}
+
+.data .item .row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.flex {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .header form {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .main {
+        flex-direction: column;
+    }
+
+    .filter, .data {
+        margin: 0 0 20px 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .header select,
+    .header input[type="date"],
+    .header button {
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    .data .item .row {
+        flex-direction: row;
+    }
+
+    .flex {
+        flex-direction: column;
+    }
+}
