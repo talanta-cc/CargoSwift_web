@@ -30,6 +30,8 @@ const App = () => {
     setUser(updatedUser);
   };
 
+  const isAuthenticated = !!localStorage.getItem('token');
+
   return (
     <div>
       <Header />
@@ -44,35 +46,19 @@ const App = () => {
         <Route path="/signup" element={<SignUp />} />
         <Route
           path="/profile"
-          element={
-            <ProtectedRoute>
-              <ProfilePage user={user} />
-            </ProtectedRoute>
-          }
+          element={<ProtectedRoute isAuthenticated={isAuthenticated} component={ProfilePage} user={user} />}
         />
         <Route
           path="/edit-profile"
-          element={
-            <ProtectedRoute>
-              <EditProfilePage user={user} updateUser={updateUser} />
-            </ProtectedRoute>
-          }
+          element={<ProtectedRoute isAuthenticated={isAuthenticated} component={EditProfilePage} updateUser={updateUser} />}
         />
         <Route
           path="/change-password"
-          element={
-            <ProtectedRoute>
-              <ChangePasswordPage />
-            </ProtectedRoute>
-          }
+          element={<ProtectedRoute isAuthenticated={isAuthenticated} component={ChangePasswordPage} />}
         />
         <Route
           path="/orders"
-          element={
-            <ProtectedRoute>
-              <OrderList user={user} />
-            </ProtectedRoute>
-          }
+          element={<ProtectedRoute isAuthenticated={isAuthenticated} component={OrderList} user={user} />}
         />
       </Routes>
       <Footer />

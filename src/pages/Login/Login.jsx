@@ -11,7 +11,7 @@ const Login = () => {
     const password = e.target.password.value;
 
     try {
-      const response = await fetch('https://cargoswift.talantacomputeschoo.com/api/auth/login', {
+      const response = await fetch('https://cargoswift.talantacomputerschool.com/api/auth/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -21,13 +21,13 @@ const Login = () => {
 
       const result = await response.json();
 
-      if (result.error) {
-        alert(result.message);
+      if (!response.ok) {
+        alert(result.message || "An error occurred. Please try again.");
       } else {
         alert("Login successful!");
         localStorage.setItem('token', result.data.token); 
         localStorage.setItem('user', JSON.stringify({ name: result.data.name, email }));
-        navigate("/profile");
+        navigate("/");
       }
     } catch (error) {
       alert("An error occurred. Please try again.");

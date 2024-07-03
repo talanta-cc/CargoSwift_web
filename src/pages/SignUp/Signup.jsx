@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import './Signup.css';
+import { useNavigate } from 'react-router-dom';
 
 function Signup() {
+  const navigate = useNavigate();
+
   const [details, setDetails] = useState({
     username: "",
     email: "",
@@ -32,7 +35,7 @@ function Signup() {
     }
 
     try {
-      const response = await fetch('https://cargoswift.talantacomputeschoo.com/api/auth/register', {
+      const response = await fetch('https://cargoswift.talantacomputerschool.com/api/auth/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -48,25 +51,14 @@ function Signup() {
 
       const result = await response.json();
 
-      console.log('Response:', response);
-      console.log('Result:', result);
-
       if (!response.ok) {
         setError(result.message || "An error occurred. Please try again.");
       } else {
         setSuccess("Registration Successful!");
         setError(null);
-        setDetails({
-          username: "",
-          email: "",
-          phone_number: "",
-          role: "user",
-          password: "",
-          confirmPassword: "",
-        });
+        navigate('/login'); // Redirect to login page after successful registration
       }
     } catch (error) {
-      console.error("Registration Error:", error); 
       setError("An error occurred. Please try again.");
     }
   };

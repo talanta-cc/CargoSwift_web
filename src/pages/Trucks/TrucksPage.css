@@ -135,8 +135,6 @@ body {
     justify-content: space-between;
     gap: 20px;
 }
-
-/* Responsive styles */
 @media (max-width: 768px) {
     .header form {
         flex-direction: column;
