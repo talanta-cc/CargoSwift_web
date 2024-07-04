@@ -1,12 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Login.css';
 import { useNavigate, Link } from 'react-router-dom';
+import LoadingIndicator from '../../components/LoadingIndicator';
 
 const Login = () => {
   const navigate = useNavigate(); 
+  const [isLoading, setIsLoading] = useState(false); 
 
   const submit = async (e) => {
     e.preventDefault();
+    setIsLoading(true); 
     const email = e.target.email.value;
     const password = e.target.password.value;
 
@@ -24,18 +27,21 @@ const Login = () => {
       if (!response.ok) {
         alert(result.message || "An error occurred. Please try again.");
       } else {
-        alert("Login successful!");
+        // alert("Login successful!");
         localStorage.setItem('token', result.data.token); 
         localStorage.setItem('user', JSON.stringify({ name: result.data.name, email }));
         navigate("/");
       }
     } catch (error) {
       alert("An error occurred. Please try again.");
+    } finally {
+      setIsLoading(false); 
     }
   };
 
   return (
     <div className="Login">
+      {isLoading && <LoadingIndicator />}
       <div className="login-container">
         <h2>Login</h2>
         <form onSubmit={submit}>
@@ -51,6 +57,8 @@ const Login = () => {
         </form>
         <p>Don't have an account?</p>
         <Link to="/signup">Register</Link>
+        <p>Forgot your password?</p>
+        <Link to="/forgot-password">Forgot Password?</Link>
       </div>
     </div>
   );

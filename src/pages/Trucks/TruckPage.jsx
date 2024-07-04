@@ -1,5 +1,5 @@
 import React from 'react';
-import "./TrucksPage.css";
+import './TrucksPage.css';
 
 const Truck = ({ truck }) => {
   return (
@@ -8,7 +8,7 @@ const Truck = ({ truck }) => {
         <div className="col">
           <h1>{truck.title}</h1>
           <small>{truck.seatLayout}</small>
-          <a href="">{truck.type}</a>
+          <button>{truck.type}</button>
         </div>
         <div className="col flex">
           <div className="start">
@@ -16,7 +16,7 @@ const Truck = ({ truck }) => {
             <small>{truck.tripDetails.startLocation}</small>
           </div>
           <div className="middle">
-            <p>=== </p>
+            <p>===</p>
             <small>{truck.tripDetails.duration}</small>
           </div>
           <div className="stop">
@@ -24,10 +24,14 @@ const Truck = ({ truck }) => {
             <small>{truck.tripDetails.destinationLocation}</small>
           </div>
         </div>
-        <div className="col ">
-          <p>$ {truck.tripDetails.price} </p>
-          <p>Off Days: <span>{truck.tripDetails.offDays.map((day) => <span key={day}>{day} </span>)}</span></p>
-          <button>Select</button>
+        <div className="col">
+          <p>$ {truck.tripDetails.price}</p>
+          {Array.isArray(truck.tripDetails.offDays) && (
+            <p>
+              Off Days: <span>{truck.tripDetails.offDays.map(day => <span key={day}>{day} </span>)}</span>
+            </p>
+          )}
+          <button id='truck_btn'>Select</button>
         </div>
       </div>
     </div>

@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import './Signup.css';
 import { useNavigate } from 'react-router-dom';
+import LoadingIndicator from '../../components/LoadingIndicator';
 
 function Signup() {
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
 
   const [details, setDetails] = useState({
     username: "",
@@ -27,10 +29,12 @@ function Signup() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true); 
     const { username, email, phone_number, role, password, confirmPassword } = details;
 
     if (password !== confirmPassword) {
       setError("Passwords do not match");
+      setIsLoading(false); 
       return;
     }
 
@@ -56,15 +60,18 @@ function Signup() {
       } else {
         setSuccess("Registration Successful!");
         setError(null);
-        navigate('/login'); // Redirect to login page after successful registration
+        navigate('/login'); 
       }
     } catch (error) {
       setError("An error occurred. Please try again.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
     <div className="registration-container">
+      {isLoading && <LoadingIndicator />}
       <h2>Registration</h2>
       <form onSubmit={handleSubmit}>
         <div className="form-group">

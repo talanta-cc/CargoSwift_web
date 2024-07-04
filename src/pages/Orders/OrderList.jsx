@@ -19,7 +19,7 @@ const OrderList = ({ user }) => {
 
   return (
     <div className="order-list">
-      <h1>{user.name ? `${user.name}'s Orders` : 'Your Orders'}</h1>
+      <h1>{user?.name ? `${user.name}'s Orders` : 'Your Orders'}</h1>
       <div className="filter-buttons">
         <button onClick={() => handleFilterChange('All')}>All</button>
         <button onClick={() => handleFilterChange('Delivered')}>Delivered</button>

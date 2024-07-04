@@ -135,6 +135,30 @@ body {
     justify-content: space-between;
     gap: 20px;
 }
+#truck_btn {
+    background-color: #4CAF50; 
+    color: white; 
+    border: none; 
+    padding: 10px 20px; 
+    text-align: center; 
+    text-decoration: none;
+    display: inline-block; 
+    font-size: 16px; 
+    margin: 10px 2px; 
+    cursor: pointer; 
+    border-radius: 12px; 
+    transition: background-color 0.3s ease, box-shadow 0.3s ease; 
+  }
+  
+  #truck_btn:hover {
+    background-color: #45a049; 
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); 
+  }
+  
+  #truck_btn:active {
+    background-color: #3e8e41; 
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3) inset; 
+  }
 @media (max-width: 768px) {
     .header form {
         flex-direction: column;

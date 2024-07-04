@@ -5,6 +5,7 @@ import Header from './components/Header';
 import Home from './pages/Home/Home';
 import About from './pages/AboutUs/About';
 import Login from './pages/Login/Login';
+import ForgotPassword from './pages/ForgotPassword/ForgotPassword'; 
 import SignUp from './pages/SignUp/Signup';
 import Footer from './pages/Footer/Footer';
 import Projects from './pages/Projects/Projects';
@@ -44,21 +45,22 @@ const App = () => {
         <Route path="/contact" element={<Contact />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route
           path="/profile"
-          element={<ProtectedRoute isAuthenticated={isAuthenticated} component={ProfilePage} user={user} />}
+          element={<ProtectedRoute isAuthenticated={isAuthenticated} element={ProfilePage} user={user} />}
         />
         <Route
           path="/edit-profile"
-          element={<ProtectedRoute isAuthenticated={isAuthenticated} component={EditProfilePage} updateUser={updateUser} />}
+          element={<ProtectedRoute isAuthenticated={isAuthenticated} element={EditProfilePage} updateUser={updateUser} />}
         />
         <Route
           path="/change-password"
-          element={<ProtectedRoute isAuthenticated={isAuthenticated} component={ChangePasswordPage} />}
+          element={<ProtectedRoute isAuthenticated={isAuthenticated} element={ChangePasswordPage} />}
         />
         <Route
           path="/orders"
-          element={<ProtectedRoute isAuthenticated={isAuthenticated} component={OrderList} user={user} />}
+          element={<ProtectedRoute isAuthenticated={isAuthenticated} element={OrderList} user={user} />}
         />
       </Routes>
       <Footer />
