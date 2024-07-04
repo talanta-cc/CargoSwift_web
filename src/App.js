@@ -17,8 +17,9 @@ import OrderList from './pages/Orders/OrderList';
 import TrucksPage from './pages/Trucks/TrucksPage';
 import ProtectedRoute from './components/ProtectedRoute';
 
+
 const App = () => {
-  const [user, setUser] = useState({ name: '', email: '' });
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
     const storedUser = localStorage.getItem('user');
@@ -27,32 +28,38 @@ const App = () => {
     }
   }, []);
 
-  const updateUser = (updatedUser) => {
-    setUser(updatedUser);
+  const handleLogin = (loggedInUser) => {
+    setUser(loggedInUser);
+    localStorage.setItem('user', JSON.stringify(loggedInUser));
   };
 
-  const isAuthenticated = !!localStorage.getItem('token');
+  const handleLogout = () => {
+    setUser(null);
+    localStorage.removeItem('user');
+  };
+
+  const isAuthenticated = !!user; // Check if user is authenticated
 
   return (
     <div>
       <Header />
-      <Navbar />
+      <Navbar isAuthenticated={isAuthenticated} onLogout={handleLogout} />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/trucks" element={<TrucksPage />} />
         <Route path="/about" element={<About />} />
         <Route path="/projects" element={<Projects />} />
         <Route path="/contact" element={<Contact />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/login" element={<Login onLogin={handleLogin} />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route
-          path="/profile"
-          element={<ProtectedRoute isAuthenticated={isAuthenticated} element={ProfilePage} user={user} />}
-        />
-        <Route
+         path="/profile"
+         element={<ProtectedRoute isAuthenticated={isAuthenticated} element={ProfilePage} />}
+       />
+       <Route
           path="/edit-profile"
-          element={<ProtectedRoute isAuthenticated={isAuthenticated} element={EditProfilePage} updateUser={updateUser} />}
+          element={<ProtectedRoute isAuthenticated={isAuthenticated} element={EditProfilePage} />}
         />
         <Route
           path="/change-password"
@@ -60,7 +67,7 @@ const App = () => {
         />
         <Route
           path="/orders"
-          element={<ProtectedRoute isAuthenticated={isAuthenticated} element={OrderList} user={user} />}
+          element={<ProtectedRoute isAuthenticated={isAuthenticated} element={OrderList} />}
         />
       </Routes>
       <Footer />
