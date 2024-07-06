@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import './Login.css';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, useLocation } from 'react-router-dom';
 import LoadingIndicator from '../../components/LoadingIndicator';
 
-const Login = () => {
+const Login = ({ onLogin }) => {
   const navigate = useNavigate(); 
+  const location = useLocation();
   const [isLoading, setIsLoading] = useState(false); 
 
   const submit = async (e) => {
@@ -30,7 +31,9 @@ const Login = () => {
         // alert("Login successful!");
         localStorage.setItem('token', result.data.token); 
         localStorage.setItem('user', JSON.stringify({ name: result.data.name, email }));
-        navigate("/");
+        onLogin({ name: result.data.name, email }); // Call the onLogin callback
+        const from = location.state?.from?.pathname || '/';
+        navigate(from);
       }
     } catch (error) {
       alert("An error occurred. Please try again.");
