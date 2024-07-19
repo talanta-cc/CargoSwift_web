@@ -9,13 +9,14 @@ import ForgotPassword from './pages/ForgotPassword/ForgotPassword';
 import SignUp from './pages/SignUp/Signup';
 import Footer from './pages/Footer/Footer';
 import Projects from './pages/Projects/Projects';
-import Contact from './pages/Contact/Contact';
+import CargoPage from './pages/Cargos/CargoPage';
 import ProfilePage from './pages/Profile/ProfilePage/ProfilePage';
 import EditProfilePage from './pages/Profile/EditProfile/EditProfilePage';
 import ChangePasswordPage from './pages/Profile/ChangePasswordPage/ChangePasswordPage';
 import OrderList from './pages/Orders/OrderList';
 import TrucksPage from './pages/Trucks/TrucksPage';
 import ProtectedRoute from './components/ProtectedRoute';
+import Maps from './pages/Trucks/Maps';
 
 
 const App = () => {
@@ -38,7 +39,7 @@ const App = () => {
     localStorage.removeItem('user');
   };
 
-  const isAuthenticated = !!user; // Check if user is authenticated
+  const isAuthenticated = !!user; 
 
   return (
     <div>
@@ -49,10 +50,11 @@ const App = () => {
         <Route path="/trucks" element={<TrucksPage />} />
         <Route path="/about" element={<About />} />
         <Route path="/projects" element={<Projects />} />
-        <Route path="/contact" element={<Contact />} />
+        <Route path="/cargopage" element={<CargoPage userId={user?.id} latitude={0} longitude={0} />} />
         <Route path="/login" element={<Login onLogin={handleLogin} />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/map/:truckName" component={Maps} />
         <Route
          path="/profile"
          element={<ProtectedRoute isAuthenticated={isAuthenticated} element={ProfilePage} />}

@@ -148,18 +148,40 @@ body {
     font-style: italic;
     margin-bottom: 10p
 }
-.last_part{
-    content: '';
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    background-image: url('../../assets/images/cargo-ship.jpg');
-    background-size: cover;
-    height: 50vh;
-    background-position: center;
-    opacity: 1.5; 
-    z-index: -1; 
+.section-2 .card{
+    transform: translate(10%, 35%);
+    width:80vw;
+    padding:40px;
+    position: relative;
+    top:-200px;
+    background-color: white;
+}
+
+ .section-2 .image-section{
+    width:100vw;
+    height:60vh;
+    background-color: red;
+    background-image: url('../../assets/images/homebackgroundcargo.jpg');
+    /* background-image: url(C:\Js\React\CargoSwift_web\src\assets\images\hamburg-3021820_1920.jpg);        */
+    background-position: center center;
+    background-repeat:repeat;
+}
+.section-2 .card .why-us{
+    display: flex;
+}
+.section-2{
+    height: 60vh;
+}
+.mini-image{
+    width: 100%;
+    /* background-image: url(C:\Js\React\CargoSwift_web\src\assets\images\transport-plane-4689903_1920.jpg); */
+    background-position:center left; 
+} */
+.mini-image .plane-img{
+    width:60vw;
+    height:30vh;
+    object-fit:cover;
+    object-position:100% 70%;
 }
 
 @media (max-width: 768px) {

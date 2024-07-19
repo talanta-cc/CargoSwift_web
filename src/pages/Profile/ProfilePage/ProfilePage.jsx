@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './ProfilePage.css';
+import VehicleForm from '../../../components/VehicleForm';
 
 const ProfilePage = () => {
   const [user, setUser] = useState({
@@ -11,14 +12,17 @@ const ProfilePage = () => {
     phoneNumber: '',
     address: '',
     dateOfBirth: '',
-    about:''
+    about: '',
+    role: ''
   });
   const navigate = useNavigate();
 
   useEffect(() => {
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
-      setUser(JSON.parse(storedUser));
+      const parsedUser = JSON.parse(storedUser);
+      console.log('Stored user:', parsedUser); // Debug statement
+      setUser(parsedUser);
     } else {
       navigate('/login');
     }
@@ -61,6 +65,10 @@ const ProfilePage = () => {
     alert('Changes saved successfully!');
   };
 
+  const handleAddVehicle = (vehicle) => {
+    console.log('Vehicle added:', vehicle);
+  };
+
   return (
     <div className="profile-page">
       <h1>Personal Information</h1><hr />
@@ -84,9 +92,13 @@ const ProfilePage = () => {
         <Link to="/change-password" className="profile-action">Change Password</Link>
         <button onClick={handleLogout} className="logout-button">Logout</button>
       </div>
+      {user.role === 'trucker' && (
+        <div className="vehicle-form">
+          <VehicleForm onAddVehicle={handleAddVehicle} />
+        </div>
+      )}
     </div>
   );
 };
 
 export default ProfilePage;
-

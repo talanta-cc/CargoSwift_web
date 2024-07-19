@@ -1,36 +1,56 @@
 import React, { useState, useEffect } from 'react';
 import './TrucksPage.css';
 import Truck from './TruckPage';
+// import useGetLocation from './useGetLocation';
 
 const Trucks = () => {
-    const [trucks] = useState([
-        {"id":"1", "title":"AC-Kansas-Echo Bass", "seatLayout":"2x2", "type":"AC",
-            "tripDetails": {"startTime":"08:00 AM", "startLocation":"Kansas", "arrivalTime":"04:30 PM", "destinationLocation":"Echo Bass", "duration":"08:30 min", "price":100, "offDays":["Friday"]}
-        },
-        {"id":"2", "title":"AC-Dakota-Michigan", "seatLayout":"1x2", "type":"AC",
-            "tripDetails": {"startTime":"08:00 AM", "startLocation":"Dakota", "arrivalTime":"03:30 PM", "destinationLocation":"Michigan", "duration":"07:30 min", "price":120, "offDays":["Thursday"]}
-        },
-        {"id":"3", "title":"Coach-Chicago-Texas", "seatLayout":"2x2", "type":"Coach",
-            "tripDetails": {"startTime":"08:00 AM", "startLocation":"Chicago", "arrivalTime":"06:30 PM", "destinationLocation":"Texas", "duration":"10:30 min", "price":160, "offDays":["Friday"]}
-        },
-        {"id":"4", "title":"Classic-Florida-California", "seatLayout":"2x2", "type":"Classic",
-            "tripDetails": {"startTime":"08:00 AM", "startLocation":"Florida", "arrivalTime":"04:30 PM", "destinationLocation":"California", "duration":"08:30 min", "price":100, "offDays":["Friday"]}
-        },
-        {"id":"5", "title":"Classic-Kansas-Texas", "seatLayout":"2x2", "type":"Classic",
-            "tripDetails": {"startTime":"08:00 AM", "startLocation":"Kansas", "arrivalTime":"05:30 PM", "destinationLocation":"Texas", "duration":"09:30 min", "price":140, "offDays":["Thursday"]}
-        },
-    ]);
-
+    const [trucks, setTrucks] = useState({
+        error: false,
+        message: "",
+        loading: false,
+        data: []
+    });
+    const [categories, setCategories] = useState([]);
     const [pickup, setPickup] = useState('Pickup Point');
     const [droppingPoint, setDroppingPoint] = useState('Dropping Point');
     const [date, setDate] = useState('');
     const [typeAC, setTypeAC] = useState(false);
     const [typeClassic, setTypeClassic] = useState(false);
     const [typeCoach, setTypeCoach] = useState(false);
-    const [filteredTrucks, setFilteredTrucks] = useState(trucks);
+    const [filteredTrucks, setFilteredTrucks] = useState( {
+        error: false,
+        message: "",
+        loading: false,
+        data: []
+    });
+    const [selectedTruck, setSelectedTruck] = useState(null);
+    // const { location, getLocation } = useGetLocation(); 
+
+    const fetchTrucks = async () => {
+        try {
+            const response = await fetch('https://cargoswift.talantacomputerschool.com/api/vehicles/home/5576/56454');
+            const data = await response.json();
+            console.log('Fetched Trucks:', data);
+            setTrucks(data);
+            setFilteredTrucks(data);
+        } catch (error) {
+            console.error('Error fetching trucks:', error);
+        }
+    };
+
+    const fetchCategories = async () => {
+        try {
+            const response = await fetch('https://cargoswift.talantacomputerschool.com/api/categories');
+            const data = await response.json();
+            console.log('Fetched Categories:', data);
+            setCategories(data);
+        } catch (error) {
+            console.error('Error fetching categories:', error);
+        }
+    };
 
     const handleFilterChange = (type, checked) => {
-        switch(type) {
+        switch (type) {
             case 'AC':
                 setTypeAC(checked);
                 break;
@@ -46,7 +66,7 @@ const Trucks = () => {
     };
 
     const filterTrucks = () => {
-        let updatedTrucks = trucks.filter(truck => {
+        let updatedTrucks = trucks.data.filter(truck => {
             const matchPickup = pickup === 'Pickup Point' || truck.tripDetails.startLocation.includes(pickup);
             const matchDrop = droppingPoint === 'Dropping Point' || truck.tripDetails.destinationLocation.includes(droppingPoint);
             const matchDate = date === '' || truck.tripDetails.startTime.includes(date);
@@ -66,6 +86,11 @@ const Trucks = () => {
     };
 
     useEffect(() => {
+        fetchTrucks();
+         fetchCategories();
+    }, []);
+
+    useEffect(() => {
         filterTrucks();
     }, [pickup, droppingPoint, date, typeAC, typeClassic, typeCoach]);
 
@@ -74,27 +99,26 @@ const Trucks = () => {
         filterTrucks();
     };
 
+    const handleSelectTruck = (truck) => {
+        setSelectedTruck(truck);
+    };
+
     return (
         <div className='container'>
             <div className='header'>
                 <form onSubmit={submitForm}>
                     <select name="pickup-point" onChange={e => setPickup(e.target.value)} value={pickup}>
                         <option value="Pickup Point">--Pickup Point--</option>
-                        <option value="California">California</option>
-                        <option value="Washington DC">Washington DC</option>
-                        <option value="New York">New York</option>
-                        <option value="Los Angeles">Los Angeles</option>
-                        <option value="Dakota">Dakota</option>
-                        <option value="Kansas">Kansas</option>
+                        {Array.isArray(categories) && categories.map(category => (
+                            <option key={category.id} value={category.name}>{category.name}</option>
+                        ))}
                     </select>
 
                     <select name="Dropping-point" value={droppingPoint} onChange={e => setDroppingPoint(e.target.value)}>
                         <option value="Dropping Point">--Dropping Point--</option>
-                        <option value="California">California</option>
-                        <option value="Washington DC">Washington DC</option>
-                        <option value="New York">New York</option>
-                        <option value="Los Angeles">Los Angeles</option>
-                        <option value="Texas">Texas</option>
+                        {Array.isArray(categories) && categories.map(category => (
+                            <option key={category.id} value={category.name}>{category.name}</option>
+                        ))}
                     </select>
                     <input type="date" value={date} onChange={e => setDate(e.target.value)} />
                     <button type='submit'>Find</button>
@@ -122,11 +146,15 @@ const Trucks = () => {
                     </div>
                 </div>
                 <div className="data">
-                    {filteredTrucks.map(truck => (
-                        <Truck truck={truck} key={truck.id} />
-                    ))}
+                    {trucks?.data.length > 0 ? (
+                        trucks.data.map(truck => (
+                            <Truck truck={truck} key={truck.id} onSelect={handleSelectTruck} />
+                        ))
+                    ) : (
+                        <p>No trucks available</p>
+                    )}
                 </div>
-            </div>
+            </div>           
         </div>
     );
 };

@@ -34,7 +34,7 @@ const Navbar = ({ isAuthenticated, onLogout }) => {
                         <Link to="/">Flatbeds</Link>
                     </div>
                 </div>
-                <Link to="/contact">Contact</Link>
+                <Link to="/cargopage">Cargos</Link>
                 <Link to="/about">About Us</Link>
                 {isAuthenticated && <Link to="/orders">Orders</Link>}
             </div>
@@ -65,9 +65,9 @@ const Navbar = ({ isAuthenticated, onLogout }) => {
                         <FontAwesomeIcon icon={faLinkedin} />
                     </a>
                 </div>
-                <div className="request-quote">
+                {/* <div className="request-quote">
                     <p>Request Quote</p>
-                </div>
+                </div> */}
             </div>
         </nav>
     );

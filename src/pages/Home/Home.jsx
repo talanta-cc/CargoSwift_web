@@ -87,9 +87,23 @@ function Home() {
           </div>
           </div>
         </div> 
-<div className="last_part">
-  
-</div>
+        <section className='section-2'>
+            <div className="image-section">
+
+            </div>
+            <div className="card">
+                <div className="why-us">
+                    <div>
+                    <p className="tag">Why Us</p>
+                    <h1 className='heading'>We Provide Full Range Global Logistics Solution</h1>
+                    </div>
+                    <div className='mini-image'>
+                      {/* <img src={plane} class='plane-img' alt="" /> */}
+                    </div>
+
+                </div>
+            </div>
+        </section>
     </>
   )
 }

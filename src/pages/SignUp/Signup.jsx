@@ -11,7 +11,7 @@ function Signup() {
     username: "",
     email: "",
     phone_number: "",
-    role: "user",
+    role: "user", // Default to "user"
     password: "",
     confirmPassword: "",
   });
@@ -29,12 +29,12 @@ function Signup() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsLoading(true); 
+    setIsLoading(true);
     const { username, email, phone_number, role, password, confirmPassword } = details;
 
     if (password !== confirmPassword) {
       setError("Passwords do not match");
-      setIsLoading(false); 
+      setIsLoading(false);
       return;
     }
 
@@ -60,7 +60,11 @@ function Signup() {
       } else {
         setSuccess("Registration Successful!");
         setError(null);
-        navigate('/login'); 
+        // Store the user including the role
+        const user = { username, email, phone_number, role };
+        console.log('User to be stored:', user); // Debug statement
+        localStorage.setItem('user', JSON.stringify(user));
+        navigate('/login');
       }
     } catch (error) {
       setError("An error occurred. Please try again.");
