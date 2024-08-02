@@ -16,7 +16,7 @@ import ChangePasswordPage from './pages/Profile/ChangePasswordPage/ChangePasswor
 import OrderList from './pages/Orders/OrderList';
 import TrucksPage from './pages/Trucks/TrucksPage';
 import ProtectedRoute from './components/ProtectedRoute';
-import Maps from './pages/Trucks/Maps';
+import Maps from './pages/Trucks/MapPage';
 
 
 const App = () => {
@@ -54,7 +54,7 @@ const App = () => {
         <Route path="/login" element={<Login onLogin={handleLogin} />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
-        <Route path="/map/:truckName" component={Maps} />
+        <Route path="/map" element={<Maps/>} />
         <Route
          path="/profile"
          element={<ProtectedRoute isAuthenticated={isAuthenticated} element={ProfilePage} />}
