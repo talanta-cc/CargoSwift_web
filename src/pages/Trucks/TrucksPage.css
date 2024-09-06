@@ -159,6 +159,73 @@ body {
     background-color: #3e8e41; 
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3) inset; 
   }
+  .search-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.search-bar {
+    width: 100%;
+    max-width: 600px;
+    display: flex;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.search-bar input[type="text"] {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    font-size: 16px;
+    outline: none;
+}
+
+.search-bar button {
+    padding: 10px 20px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.search-bar button:hover {
+    background-color: #0056b3;
+}
+
+@media (max-width: 768px) {
+    .search-bar input[type="text"] {
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    .search-bar button {
+        font-size: 14px;
+        padding: 8px 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .search-container {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .search-bar {
+        max-width: 100%;
+    }
+
+    .search-bar button {
+        width: 100%;
+        margin-top: 10px;
+    }
+}
+
 @media (max-width: 768px) {
     .header form {
         flex-direction: column;

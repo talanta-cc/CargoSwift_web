@@ -28,14 +28,14 @@ const Navbar = ({ isAuthenticated, onLogout }) => {
                 <div className="dropdown">
                     <Link to="/trucks" className="dropdown-link">Trucks</Link>
                     <div className="dropdown-content">
-                        <Link to="/trucks">Box Trucks</Link>
+                        {/* <Link to="/trucks">Box Trucks</Link>
                         <Link to="/">Reefers</Link>
                         <Link to="/">Dry Vans</Link>
-                        <Link to="/">Flatbeds</Link>
+                        <Link to="/">Flatbeds</Link> */}
                     </div>
                 </div>
                 <Link to="/cargopage">Cargos</Link>
-                <Link to="/about">About Us</Link>
+                {/* <Link to="/about">About Us</Link> */}
                 {isAuthenticated && <Link to="/orders">Orders</Link>}
             </div>
             <div className="navbar-links-right">

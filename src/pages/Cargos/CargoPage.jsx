@@ -1,51 +1,45 @@
-import React, { useState, useEffect } from 'react';
-import AvailableCargos from './AvailableCargos';
-import UserCargos from './UserCargos';
-import TruckerCargos from './TruckerCargos';
-import AddCargo from './AddCargo';
+import React, { useState, useEffect, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
+import './Cargopage.css'; 
 
-const CargoPage = ({ userId, latitude, longitude }) => {
+const CargoPage = ({ userId }) => {
     const [cargos, setCargos] = useState([]);
+    const navigate = useNavigate();
 
-    useEffect(() => {
-        fetchAvailableCargos();
-    }, []);
-
-    const fetchAvailableCargos = async () => {
+    const fetchAvailableCargos = useCallback(async () => {
         try {
-            const response = await fetch(`https://cargoswift.talantacomputerschool.com/api/cargos/home/${latitude}/${longitude}`);
+            const response = await fetch(`https://cargoswift.talantacomputerschool.com/api/cargos/cargos-own/${userId}`);
             const data = await response.json();
             setCargos(data);
         } catch (error) {
-            console.error('Failed to fetch cargos:', error);
+            console.error('Error fetching cargos:', error);
         }
-    };
+    }, [userId]);
 
-    const handleAddCargo = async (newCargo) => {
-        try {
-            const response = await fetch('https://cargoswift.talantacomputerschool.com/api/cargos/add', {
-                method: 'POST',
-                body: JSON.stringify(newCargo),
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            });
-            if (response.ok) {
-                fetchAvailableCargos();
-            } else {
-                console.error('Failed to add cargo');
-            }
-        } catch (error) {
-            console.error('Failed to add cargo:', error);
-        }
+    useEffect(() => {
+        fetchAvailableCargos();
+    }, [fetchAvailableCargos]);
+
+    const handleAddCargo = () => {
+        navigate('/add-cargo');
     };
 
     return (
-        <div className='cargo'>
-            <AvailableCargos cargos={cargos} />
-            <UserCargos userId={userId} />
-            <TruckerCargos userId={userId} />
-            <AddCargo senderID={userId} onAddCargo={handleAddCargo} />
+        <div className="cargo-page">
+            <h2>My Cargos</h2>
+            <button onClick={handleAddCargo} className="add-cargo-button">Add Cargo</button>
+            {cargos.length ? (
+                cargos.map(cargo => (
+                    <div key={cargo.id} className="cargo-item">
+                        <h3>{cargo.description}</h3>
+                        <p>Estimated Size: {cargo.estimated_size} {cargo.measurement_unit}</p>
+                        <p>Location: {cargo.cargoLocation}</p>
+                        <p>Receiver: {cargo.receiverName}, {cargo.receiverPhone}</p>
+                    </div>
+                ))
+            ) : (
+                <p>No cargos available at the moment.</p>
+            )}
         </div>
     );
 };

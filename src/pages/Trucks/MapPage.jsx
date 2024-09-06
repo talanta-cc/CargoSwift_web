@@ -48,10 +48,10 @@ const MapPage = () => {
             <Marker position={location.coordinates} label="You" />
             <Marker position={truckCoordinates} label="Truck" />
           </GoogleMap>
-          {/* <p>{truckData.name}</p> */}
           {distance !== null && (
             <p>Distance to truck: {distance.toFixed(2)} km</p>
           )}
+          <button>Add Shipment</button>
         </div>
       ) : (
         <div>Loading...</div>

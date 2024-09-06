@@ -7,7 +7,7 @@ const TruckPage = ({ truck }) => {
   const navigate = useNavigate();
 
   const handleSelect = () => {
-    navigate('/map');
+    navigate(`/map?truckId=${truck.id}`);
   };
 
   return (
@@ -48,6 +48,7 @@ const TruckPage = ({ truck }) => {
 
 TruckPage.propTypes = {
   truck: PropTypes.shape({
+    id: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
     seatLayout: PropTypes.string,
     type: PropTypes.string,
