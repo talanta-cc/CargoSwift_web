@@ -79,11 +79,9 @@ const Trucks = ({ userRole }) => {
             <div className='header'>
                 <SearchTrucks query={searchQuery} onSearch={handleSearch} />
             </div>
-            { (
-                    <button onClick={handleAddTruck} className="add-truck-button">
-                        Add Truck
-                    </button>
-                )}
+            <button onClick={handleAddTruck} className="add-truck-button">
+                Add Truck
+            </button>
             <div className="main">
                 {Object.keys(groupedTrucks).map(categoryID => {
                     const categoryName = categories.find(category => category.id === parseInt(categoryID))?.name || 'Unknown Category';

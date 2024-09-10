@@ -1,15 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './OrderList.css';
 
 const OrderList = ({ user }) => {
-  const [orders, setOrders] = useState([
-    { id: 1, status: 'Delivered', description: 'Order 1 details' },
-    { id: 2, status: 'In Progress', description: 'Order 2 details' },
-    { id: 3, status: 'Cancelled', description: 'Order 3 details' },
-    { id: 4, status: 'Delivered', description: 'Order 4 details' },
-  ]);
-
+  const [orders, setOrders] = useState([]);
   const [filter, setFilter] = useState('All');
+
+  useEffect(() => {
+    const fetchOrders = async () => {
+      try {
+        const response = await fetch(`https://cargoswift.talantacomputerschool.com/api/orders/${user?.id}`);
+        const data = await response.json();
+        setOrders(data.orders || []);
+      } catch (error) {
+        console.error('Error fetching orders:', error);
+      }
+    };
+
+    if (user?.id) {
+      fetchOrders();
+    }
+  }, [user?.id]);
 
   const handleFilterChange = (status) => {
     setFilter(status);

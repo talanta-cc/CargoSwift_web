@@ -10,11 +10,13 @@ import SignUp from './pages/SignUp/Signup';
 import Footer from './pages/Footer/Footer';
 import Projects from './pages/Projects/Projects';
 import CargoPage from './pages/Cargos/CargoPage';
+import AddCargo from './pages/Cargos/AddCargo';
 import ProfilePage from './pages/Profile/ProfilePage/ProfilePage';
 import EditProfilePage from './pages/Profile/EditProfile/EditProfilePage';
 import ChangePasswordPage from './pages/Profile/ChangePasswordPage/ChangePasswordPage';
 import OrderList from './pages/Orders/OrderList';
 import TrucksPage from './pages/Trucks/TrucksPage';
+import AddTruck from './pages/Trucks/AddTruck';
 import ProtectedRoute from './components/ProtectedRoute';
 import Maps from './pages/Trucks/MapPage';
 
@@ -55,6 +57,11 @@ const App = () => {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/map" element={<Maps/>} />
+        <Route path="/add-truck" element={<ProtectedRoute isAuthenticated={isAuthenticated} element={AddTruck} />} />
+        <Route
+        path="/add-cargo"
+        element={<ProtectedRoute isAuthenticated={isAuthenticated} element={AddCargo} />}
+        />
         <Route
          path="/profile"
          element={<ProtectedRoute isAuthenticated={isAuthenticated} element={ProfilePage} />}
