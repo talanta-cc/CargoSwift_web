@@ -10,8 +10,8 @@ const useGeoLocation = () => {
         setLocation({
             loaded: true,
             coordinates: {
-                lat: location.coords.latitude,
-                lng: location.coords.longitude,
+                latitude: location.coords.latitude,
+                longitude: location.coords.longitude,
             },
         });
     };
@@ -35,7 +35,10 @@ const useGeoLocation = () => {
             return;
         }
 
-        navigator.geolocation.getCurrentPosition(onSuccess, onError);
+        navigator.geolocation.getCurrentPosition(onSuccess, onError,{
+            enableHighAccuracy:false,
+            timeout:15000
+        });
     }, []);
 
     return location;

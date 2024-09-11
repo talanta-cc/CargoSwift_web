@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, createContext } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Header from './components/Header';
@@ -19,6 +19,11 @@ import TrucksPage from './pages/Trucks/TrucksPage';
 import AddTruck from './pages/Trucks/AddTruck';
 import ProtectedRoute from './components/ProtectedRoute';
 import Maps from './pages/Trucks/MapPage';
+import UserCargos from './pages/Cargos/UserCargos';
+
+export const UserContext = createContext(null);
+
+
 
 
 const App = () => {
@@ -26,8 +31,11 @@ const App = () => {
 
   useEffect(() => {
     const storedUser = localStorage.getItem('user');
+
+    
     if (storedUser) {
       setUser(JSON.parse(storedUser));
+      
     }
   }, []);
 
@@ -43,8 +51,18 @@ const App = () => {
 
   const isAuthenticated = !!user; 
 
+  useEffect(()=>{
+    //console.log(isAuthenticated);
+    
+  },[user]);
+
+
+
   return (
     <div>
+      <UserContext.Provider value={{user,setUser}}>
+
+      
       <Header />
       <Navbar isAuthenticated={isAuthenticated} onLogout={handleLogout} />
       <Routes>
@@ -56,15 +74,27 @@ const App = () => {
         <Route path="/login" element={<Login onLogin={handleLogin} />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
-        <Route path="/map" element={<Maps/>} />
+        <Route path="/map/:id" element={<Maps/>} />
         <Route path="/add-truck" element={<ProtectedRoute isAuthenticated={isAuthenticated} element={AddTruck} />} />
         <Route
         path="/add-cargo"
         element={<ProtectedRoute isAuthenticated={isAuthenticated} element={AddCargo} />}
         />
+
+      <Route
+        path="/user-cargos"
+        element={<ProtectedRoute isAuthenticated={isAuthenticated} element={UserCargos} />}
+        />
+
+      <Route
+        path="/user-cargos/:id"
+        element={<ProtectedRoute isAuthenticated={isAuthenticated} element={UserCargos} />}
+        />
+
+
         <Route
          path="/profile"
-         element={<ProtectedRoute isAuthenticated={isAuthenticated} element={ProfilePage} />}
+         element={<ProtectedRoute  isAuthenticated={isAuthenticated} element={ProfilePage} />}
        />
        <Route
           path="/edit-profile"
@@ -80,6 +110,7 @@ const App = () => {
         />
       </Routes>
       <Footer />
+      </UserContext.Provider>
     </div>
   );
 };

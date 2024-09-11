@@ -7,7 +7,7 @@ const TruckPage = ({ truck }) => {
   const navigate = useNavigate();
 
   const handleSelect = () => {
-    navigate(`/map?truckId=${truck.id}`);
+    navigate(`/map/${truck.id}`);
   };
 
   return (
