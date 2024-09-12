@@ -9,7 +9,7 @@ const ProfilePage = () => {
     email: '',
     profileImage: '',
     username: '',
-    phoneNumber: '',
+    phone_number: '',
     address: '',
     dateOfBirth: '',
     about: '',
@@ -31,6 +31,7 @@ const ProfilePage = () => {
   const handleLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
+    
     navigate('/login');
   };
 
@@ -81,7 +82,7 @@ const ProfilePage = () => {
           <p><strong>Name:</strong> <input type="text" name="name" value={user.name} onChange={handleInputChange} /></p>
           <p><strong>Username:</strong> <input type="text" name="username" value={user.username} onChange={handleInputChange} /></p>
           <p><strong>Email: </strong><input type="email" name="email" value={user.email} onChange={handleInputChange} /> </p>
-          <p><strong>Phone Number:</strong> <input type="tel" name="phoneNumber" value={user.phoneNumber} onChange={handleInputChange} /></p>
+          <p><strong>Phone Number:</strong> <input type="tel" name="phone_number" value={user.phone_number} onChange={handleInputChange} /></p>
           <p><strong>Address:</strong> <input type="text" name="address" value={user.address} onChange={handleInputChange} /></p>
           <p><strong>Date of Birth:</strong> <input type="date" name="dateOfBirth" value={user.dateOfBirth} onChange={handleInputChange} /></p>
           <p><strong>About:</strong> <textarea name="about" value={user.about} onChange={handleInputChange}></textarea></p>

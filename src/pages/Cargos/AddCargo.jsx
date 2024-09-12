@@ -1,18 +1,29 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import useGeoLocation from '../../hooks/useGeoLocation';
+import { UserContext } from '../../App';
+import { DATAURLS } from '../../utils';
+import { useNavigate } from 'react-router-dom';
 
 
 const AddCargo = ({ loginInfo }) => {
+    const {user,setUser} = useContext(UserContext);
+    const navigate = useNavigate();
+
     const [cargoDetails, setCargoDetails] = useState({
-        cargoName: '',
-        cargoLocation: '',
-        measurementUnit: 'kg',
-        estimatedSize: '',
+        title: '',
+        senderID: user?.id,
+        sender_location:"",
+        sender_latitude: '',
+        sender_longitude: '',
+        estimated_size: '',
         description: '',
-        cargoImage: null,
-        receiverName: '',
-        receiverPhone: '',
-        receiverLocation: '',
+        image: null,
+        receiver_name: '',
+        receiver_phone: '',
+        receiver_location: '',
+        receiver_id: '',
+        receiver_latitude: '',
+        receiver_longitude: '',
     });
 
     const location = useGeoLocation();
@@ -28,44 +39,48 @@ const AddCargo = ({ loginInfo }) => {
     const handleImageChange = (e) => {
         setCargoDetails(prevDetails => ({
             ...prevDetails,
-            cargoImage: e.target.files[0],
+            image: e.target.files[0],
         }));
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (!loginInfo || !loginInfo.userData) {
+        if (!user) {
             console.error('User is not logged in');
             return;
         }
 
         const newCargo = {
-            userID: loginInfo.userData.id,
+            senderID: user.id,
             ...cargoDetails,
-            cargoLocation: cargoDetails.cargoLocation || `${location.coordinates.lat},${location.coordinates.lng}`,
+            sender_latitude: location.coordinates.latitude,
+            sender_longitude: location.coordinates.longitude,
         };
 
         const formData = new FormData();
         for (const key in newCargo) {
             formData.append(key, newCargo[key]);
         }
-        if (cargoDetails.cargoImage) {
-            formData.append('cargoImage', cargoDetails.cargoImage);
+        if (cargoDetails.image) {
+            formData.append('image', cargoDetails.image);
         }
 
         try {
-            const response = await fetch('https://your-api-endpoint.com/api/cargos/add', {
+            const request = await fetch(DATAURLS.URLS.addCargo, {
                 method: 'POST',
                 body: formData,
             });
 
-            if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
+            if (!request.ok) {
+                throw new Error(`HTTP error! Status: ${request.status}`);
             }
 
-            const data = await response.json();
-            console.log('Cargo added successfully:', data);
+            const response = await request.json();
+            if(!response.error){
+                navigate("/user-cargos");
+            }
+            console.log('Cargo added successfully:', response);
         } catch (error) {
             console.error('Error adding cargo:', error);
         }
@@ -76,22 +91,22 @@ const AddCargo = ({ loginInfo }) => {
             <h2>Add Cargo</h2>
             <input
                 type="text"
-                name="cargoName"
-                value={cargoDetails.cargoName}
+                name="title"
+                value={cargoDetails.title}
                 onChange={handleChange}
                 placeholder="Cargo Name"
                 required
             />
             <input
                 type="text"
-                name="cargoLocation"
-                value={cargoDetails.cargoLocation}
+                name="sender_location"
+                value={cargoDetails.sender_location}
                 onChange={handleChange}
                 placeholder="Cargo Location (leave blank to use current location)"
             />
             <select
-                name="measurementUnit"
-                value={cargoDetails.measurementUnit}
+                name="measurement_unit"
+                value={cargoDetails.measurement_unit}
                 onChange={handleChange}
             >
                 <option value="kg">Kilograms</option>
@@ -100,8 +115,8 @@ const AddCargo = ({ loginInfo }) => {
             </select>
             <input
                 type="text"
-                name="estimatedSize"
-                value={cargoDetails.estimatedSize}
+                name="estimated_size"
+                value={cargoDetails.estimated_size}
                 onChange={handleChange}
                 placeholder="Estimated Size (optional)"
             />
@@ -114,30 +129,31 @@ const AddCargo = ({ loginInfo }) => {
             />
             <input
                 type="file"
-                name="cargoImage"
+                name="images"
+                
                 onChange={handleImageChange}
                 accept="image/*"
             />
             <input
                 type="text"
-                name="receiverName"
-                value={cargoDetails.receiverName}
+                name="receiver_name"
+                value={cargoDetails.receiver_name}
                 onChange={handleChange}
                 placeholder="Receiver Name"
                 required
             />
             <input
                 type="text"
-                name="receiverPhone"
-                value={cargoDetails.receiverPhone}
+                name="receiver_phone"
+                value={cargoDetails.receiver_phone}
                 onChange={handleChange}
                 placeholder="Receiver Phone"
                 required
             />
             <input
                 type="text"
-                name="receiverLocation"
-                value={cargoDetails.receiverLocation}
+                name="receiver_location"
+                value={cargoDetails.receiver_location}
                 onChange={handleChange}
                 placeholder="Receiver Location"
             />

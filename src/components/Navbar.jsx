@@ -1,11 +1,14 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import './Navbar.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { faFacebook, faTwitter, faInstagram, faLinkedin } from '@fortawesome/free-brands-svg-icons';
 import { Link, useNavigate } from 'react-router-dom';
+import { UserContext } from '../App';
 
 const Navbar = ({ isAuthenticated, onLogout }) => {
+    const {user,setUser} = useContext(UserContext);
+
     const [menuOpen, setMenuOpen] = useState(false);
     const navigate = useNavigate();
 
@@ -34,7 +37,12 @@ const Navbar = ({ isAuthenticated, onLogout }) => {
                         <Link to="/">Flatbeds</Link> */}
                     </div>
                 </div>
-                <Link to="/cargopage">Cargos</Link>
+                
+                {
+                    user && user.role=="trucker"?
+                    <Link to="/cargopage">Cargos</Link>:
+                    <Link to="/user-cargos">My Cargos</Link>
+                }
                 {/* <Link to="/about">About Us</Link> */}
                 {isAuthenticated && <Link to="/orders">Orders</Link>}
             </div>

@@ -30,9 +30,16 @@ const Login = ({ onLogin }) => {
       } else {
         // alert("Login successful!");
         localStorage.setItem('token', result.data.token); 
-        localStorage.setItem('user', JSON.stringify({ name: result.data.name, email }));
-        onLogin({ name: result.data.name, email }); // Call the onLogin callback
+
+        localStorage.setItem('user', JSON.stringify(result.data));
+         // Call the onLogin callback
         const from = location.state?.from?.pathname || '/';
+        
+        if(result.error){
+          alert(result.message || "An error occurred. Please try again.");
+          return;
+        }
+        onLogin(result.data);
         navigate(from);
       }
     } catch (error) {

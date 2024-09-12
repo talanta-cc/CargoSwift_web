@@ -4,63 +4,77 @@ import './TrucksPage.css';
 import TruckPage from './TruckPage';
 import SearchTrucks from './SearchTrucks';
 
-const Trucks = ({ userRole }) => {
+const categoryMap = {
+    'trailer': 1,
+    'semi-truck': 2,
+    'pickup': 3
+};
+
+const Trucks = () => {
     const [trucks, setTrucks] = useState([]);
-    const [categories, setCategories] = useState([]);
     const [filteredTrucks, setFilteredTrucks] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
+    const [selectedCategory, setSelectedCategory] = useState('');
     const navigate = useNavigate();
 
-    const groupTrucksByCategory = (trucks) => {
-        return trucks.reduce((acc, truck) => {
-            const categoryID = truck.categoryID;
-            if (!acc[categoryID]) {
-                acc[categoryID] = [];
-            }
-            acc[categoryID].push(truck);
-            return acc;
-        }, {});
-    };
-
     useEffect(() => {
-        const fetchTrucks = async () => {
-            try {
-                const response = await fetch('https://cargoswift.talantacomputerschool.com/api/vehicles/home/5576/56454');
-                const data = await response.json();
-                console.log('Fetched Trucks:', data);
-                setTrucks(data.data || []);
-            } catch (error) {
-                console.error('Error fetching trucks:', error);
-            }
-        };
-
-        const fetchCategories = async () => {
-            try {
-                const response = await fetch('https://cargoswift.talantacomputerschool.com/api/categories');
-                const data = await response.json();
-                console.log('Fetched Categories:', data);
-                setCategories(data.data || []);
-            } catch (error) {
-                console.error('Error fetching categories:', error);
-            }
-        };
-
         fetchTrucks();
-        fetchCategories();
     }, []);
 
     useEffect(() => {
-        filterTrucks();
-    }, [trucks, searchQuery]);
-
-    const filterTrucks = () => {
         if (searchQuery) {
-            const filtered = trucks.filter(truck =>
-                truck.name.toLowerCase().includes(searchQuery.toLowerCase())
-            );
-            setFilteredTrucks(filtered);
+            searchTrucks();
+        } else if (selectedCategory) {
+            filterTrucksByCategory();
         } else {
             setFilteredTrucks(trucks);
+        }
+    }, [searchQuery, selectedCategory, trucks]);
+
+    const fetchTrucks = async () => {
+        try {
+            const response = await fetch('https://cargoswift.talantacomputerschool.com/api/vehicles/home/5576/56454');
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const data = await response.json();
+            console.log('Fetched Trucks:', data);
+            setTrucks(data.data || []);
+            setFilteredTrucks(data.data || []);
+        } catch (error) {
+            console.error('Error fetching trucks:', error);
+        }
+    };
+
+    const searchTrucks = async () => {
+        try {
+            const formData = new FormData();
+            formData.append('search', searchQuery);
+            const response = await fetch('https://cargoswift.talantacomputerschool.com/api/vehicles', {
+                method: 'POST',
+                body: formData,
+            });
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const data = await response.json();
+            console.log('Searched Trucks:', data);
+            setFilteredTrucks(data.data || []);
+        } catch (error) {
+            console.error('Error searching trucks:', error);
+        }
+    };
+
+    const filterTrucksByCategory = () => {
+        console.log('Filtering by Category:', selectedCategory);
+        const categoryID = categoryMap[selectedCategory];
+        if (categoryID !== undefined) {
+            const filtered = trucks.filter(truck => truck.categoryID === categoryID);
+            console.log('Filtered Trucks by Category:', filtered);
+            setFilteredTrucks(filtered);
+        } else {
+            console.log('Invalid category selected');
+            setFilteredTrucks([]);
         }
     };
 
@@ -72,30 +86,33 @@ const Trucks = ({ userRole }) => {
         navigate('/add-truck');
     };
 
-    const groupedTrucks = groupTrucksByCategory(filteredTrucks);
+    const handleCategoryClick = (category) => {
+        setSelectedCategory(category === selectedCategory ? '' : category);
+    };
 
     return (
         <div className='container'>
+            <SearchTrucks query={searchQuery} onSearch={handleSearch} />
             <div className='header'>
-                <SearchTrucks query={searchQuery} onSearch={handleSearch} />
+                <div className="category-buttons">
+                    <button onClick={() => handleCategoryClick('trailer')}>Trailer</button>
+                    <button onClick={() => handleCategoryClick('semi-truck')}>Semi-Truck</button>
+                    <button onClick={() => handleCategoryClick('pickup')}>Pickup</button>
+                </div>
             </div>
             <button onClick={handleAddTruck} className="add-truck-button">
                 Add Truck
             </button>
             <div className="main">
-                {Object.keys(groupedTrucks).map(categoryID => {
-                    const categoryName = categories.find(category => category.id === parseInt(categoryID))?.name || 'Unknown Category';
-                    return (
-                        <div key={categoryID} className="category-section">
-                            <h3>{categoryName}</h3>
-                            <div className="data">
-                                {groupedTrucks[categoryID].map(truck => (
-                                    <TruckPage truck={truck} key={truck.id} />
-                                ))}
-                            </div>
-                        </div>
-                    );
-                })}
+                <div className="data">
+                    {filteredTrucks.length > 0 ? (
+                        filteredTrucks.map(truck => (
+                            <TruckPage truck={truck} key={truck.id} />
+                        ))
+                    ) : (
+                        <p>No trucks available for the selected category.</p>
+                    )}
+                </div>
             </div>
         </div>
     );
