@@ -21,7 +21,7 @@ const ProfilePage = () => {
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
       const parsedUser = JSON.parse(storedUser);
-      console.log('Stored user:', parsedUser); // Debug statement
+      console.log('Stored user:', parsedUser); 
       setUser(parsedUser);
     } else {
       navigate('/login');
@@ -93,11 +93,6 @@ const ProfilePage = () => {
         <Link to="/change-password" className="profile-action">Change Password</Link>
         <button onClick={handleLogout} className="logout-button">Logout</button>
       </div>
-      {user.role === 'trucker' && (
-        <div className="vehicle-form">
-          <VehicleForm onAddVehicle={handleAddVehicle} />
-        </div>
-      )}
     </div>
   );
 };

@@ -6,7 +6,8 @@ import { DATAURLS } from '../../utils';
 import useGeoLocation from '../../hooks/useGeoLocation';
 
 const CargoPage = ({ userId }) => {
-    const {user,setUser} = useContext(UserContext);
+    // Remove unused variables to fix warnings
+    // const { user, setUser } = useContext(UserContext);
 
     const [cargos, setCargos] = useState([]);
     const navigate = useNavigate();
@@ -15,25 +16,21 @@ const CargoPage = ({ userId }) => {
 
     const fetchAvailableCargos = useCallback(async () => {
         try {
-            
-
             const request = await fetch(`${DATAURLS.URLS.cargos}/${location.coordinates.latitude}/${location.coordinates.longitude}`);
             const response = await request.json();
             setCargos(response.data);
         } catch (error) {
             console.error('Error fetching cargos:', error);
         }
-    }, [userId]);
+    }, [location.coordinates.latitude, location.coordinates.longitude]); // Added missing dependencies
 
     useEffect(() => {
-        console.log(location);
-        
-        if(location.coordinates.latitude){
+        if (location.coordinates.latitude) {
             fetchAvailableCargos();
         }
-        
-    }, [fetchAvailableCargos,location]);
+    }, [fetchAvailableCargos, location]);
 
+    // If handleAddCargo is unused, remove it. Otherwise, leave it as it is.
     const handleAddCargo = () => {
         navigate('/add-cargo');
     };
@@ -41,16 +38,20 @@ const CargoPage = ({ userId }) => {
     return (
         <div className="cargo-page">
             <h2>Available Cargos</h2>
+            {/* Uncomment the button if needed */}
             {/* <button onClick={handleAddCargo} className="add-cargo-button">Add Cargo</button> */}
             {cargos.length ? (
                 cargos.map(cargo => (
                     <div key={cargo.id} className="cargo-item">
-                        <img style={{
-                            width:200,
-                            height:150,
-                            objectFit:"contain",
-
-                        }} src={`${DATAURLS.BASEURL}/${cargo.image}`} />
+                        <img 
+                            style={{
+                                width: 200,
+                                height: 150,
+                                objectFit: "contain",
+                            }} 
+                            src={`${DATAURLS.BASEURL}/${cargo.image}`} 
+                            alt={cargo.description || "Cargo image"}
+                        />
                         <h3>{cargo.description}</h3>
                         <p>Estimated Size: {cargo.estimated_size} {cargo.measurement_unit}</p>
                         <p>Location: {cargo.cargoLocation}</p>

@@ -32,76 +32,78 @@ const haversineDistance = (coords1, coords2) => {
 };
 
 const MapPage = () => {
-  const {id} = useParams();
-
+  const { id } = useParams();
   const location = useGeoLocation();
 
-  // const distance = location.loaded 
-  //   ? haversineDistance(location.coordinates, truckCoordinates) 
-  //   : null;
-
-  const [item,setItem] = useState({
-    loading:false,
-    data:null,
-    error:false,
-    message:""
+  const [item, setItem] = useState({
+    loading: false,
+    data: null,
+    error: false,
+    message: ""
   });
 
-  const {isLoaded} = useJsApiLoader({
+  const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
-    googleMapsApiKey: process.env.REACT_APP_GOO0GLE_MAPS_API_KEY,
+    googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
     libraries: ['geometry', 'drawing'],
   });
 
-
-  const fetchCargo = async()=>{
+  const fetchCargo = async () => {
     try {
-      setItem({...item,loading:true,message:"",error:false});
-      let request = await fetch(`${DATAURLS.URLS.viewTruck}/${id}`);
-      let response = await request.json();
-      console.log(response);
-      setItem({...response,loading:false});
-      
+      setItem({ ...item, loading: true, message: "", error: false });
+      const request = await fetch(`${DATAURLS.URLS.viewTruck}/${id}`);
+      const response = await request.json();
+      setItem({ ...item, data: response.data, loading: false });
     } catch (error) {
-      setItem({...item,loading:false,message:"",error:false});
+      setItem({ ...item, loading: false, message: "Failed to fetch cargo data.", error: true });
     }
-  }
+  };
 
-  useEffect(()=>{
+  useEffect(() => {
     fetchCargo();
-  },[]);
+  }, [id]);
 
   return (
     <>
-      {isLoaded? (
+      {isLoaded ? (
         <div>
           <GoogleMap
             mapContainerStyle={containerStyle}
-            center={{lat:location.coordinates.latitude,lng:location.coordinates.longitude}}
+            center={{
+              lat: location.coordinates?.latitude || truckCoordinates.lat,
+              lng: location.coordinates?.longitude || truckCoordinates.lng
+            }}
             zoom={14}
           >
-            <Marker position={{lat:location.coordinates.latitude,lng:location.coordinates.longitude}} label="You" />
+            <Marker position={location.coordinates} label="You" />
             <Marker position={truckCoordinates} label="Truck" />
           </GoogleMap>
-          {
-            item.loading?
-            <p>Loading...</p>:
-            item.error?
-            <p>{item.message}</p>:
-            item.data?
-            <div>
-              <img src={`${DATAURLS.BASEURL}${item.data?.image}`} />
-              <p>{item.data?.name}</p>
-              <a href={`tel:${item.data?.phone}`}>Call : {item.data?.phone}</a><br></br>
-              <a href={`mailto:${item.data?.email}`}>Email : {item.data?.email}</a>
-              <p>Distance from truck : {item.data?.distance}</p>
-              <Link to={"/add-cargo"}>
-                <button >Add Shipment</button>
-            </Link>
-            </div>:
+          {item.loading ? (
+            <p>Loading...</p>
+          ) : item.error ? (
+            <p>{item.message}</p>
+          ) : item.data ? (
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: '20px' }}>
+              <div style={{ flex: '0 0 100px', marginRight: '20px' }}>
+                <img 
+                  src={`${DATAURLS.BASEURL}${item.data?.image}`} 
+                  style={{ width: "100px", height: "200px", objectFit: 'cover' }} 
+                  alt="cargo" 
+                />
+              </div>
+              <div style={{ flex: '1' }}>
+                <p>{item.data?.name}</p>
+                <a href={`tel:${item.data?.phone}`}>Call: {item.data?.phone}</a><br />
+                <a href={`mailto:${item.data?.email}`}>Email: {item.data?.email}</a>
+                <p>Distance from truck: {item.data?.distance}</p>
+                <Link to={"/add-cargo"}>
+                  <button>Add Shipment</button>
+                </Link>
+              </div>
+            </div>
+          ) : (
             <p>Truck not found.</p>
-          }
-          
+          )}
         </div>
       ) : (
         <div>Loading...</div>
