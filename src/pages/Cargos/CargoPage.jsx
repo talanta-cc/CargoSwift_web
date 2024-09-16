@@ -1,45 +1,58 @@
-import React, { useState, useEffect, useCallback, useContext } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Cargopage.css'; 
-import { UserContext } from '../../App';
 import { DATAURLS } from '../../utils';
 import useGeoLocation from '../../hooks/useGeoLocation';
 
-const CargoPage = ({ userId }) => {
-    // Remove unused variables to fix warnings
-    // const { user, setUser } = useContext(UserContext);
-
+const CargoPage = () => {
     const [cargos, setCargos] = useState([]);
-    const navigate = useNavigate();
-
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    // const navigate = useNavigate();
     const location = useGeoLocation();
 
     const fetchAvailableCargos = useCallback(async () => {
+        if (!location.loaded || location.error) {
+            setLoading(false);
+            setError('Failed to get location.');
+            return;
+        }
+
         try {
-            const request = await fetch(`${DATAURLS.URLS.cargos}/${location.coordinates.latitude}/${location.coordinates.longitude}`);
-            const response = await request.json();
-            setCargos(response.data);
+            const response = await fetch(`${DATAURLS.URLS.cargos}/${location.coordinates.latitude}/${location.coordinates.longitude}`);
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const data = await response.json();
+            console.log('API Response:', data); 
+            setCargos(data.data || []); 
         } catch (error) {
             console.error('Error fetching cargos:', error);
+            setError('Failed to fetch cargos.');
+        } finally {
+            setLoading(false);
         }
-    }, [location.coordinates.latitude, location.coordinates.longitude]); // Added missing dependencies
+    }, [location]);
 
     useEffect(() => {
-        if (location.coordinates.latitude) {
+        console.log('Current Location:', location.coordinates); 
+        if (location.loaded && !location.error) {
             fetchAvailableCargos();
         }
     }, [fetchAvailableCargos, location]);
 
-    // If handleAddCargo is unused, remove it. Otherwise, leave it as it is.
-    const handleAddCargo = () => {
-        navigate('/add-cargo');
-    };
+    if (loading) {
+        return <p>Loading...</p>;
+    }
+
+    if (error) {
+        return <p className="error-message">{error}</p>;
+    }
 
     return (
         <div className="cargo-page">
             <h2>Available Cargos</h2>
-            {/* Uncomment the button if needed */}
-            {/* <button onClick={handleAddCargo} className="add-cargo-button">Add Cargo</button> */}
+            {/* <button onClick={() => navigate('/add-cargo')} className="add-cargo-button">Add Cargo</button> */}
             {cargos.length ? (
                 cargos.map(cargo => (
                     <div key={cargo.id} className="cargo-item">

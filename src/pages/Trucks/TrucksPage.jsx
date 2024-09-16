@@ -23,11 +23,11 @@ const Trucks = () => {
 
     useEffect(() => {
         if (searchQuery) {
-            searchTrucks();
+            searchTrucks(); 
         } else if (selectedCategory) {
-            filterTrucksByCategory();
+            filterTrucksByCategory(); 
         } else {
-            setFilteredTrucks(trucks);
+            setFilteredTrucks(trucks); 
         }
     }, [searchQuery, selectedCategory, trucks]);
 
@@ -49,7 +49,7 @@ const Trucks = () => {
     const searchTrucks = async () => {
         try {
             const formData = new FormData();
-            formData.append('search', searchQuery);
+            formData.append('search', searchQuery); 
             const response = await fetch('https://cargoswift.talantacomputerschool.com/api/vehicles', {
                 method: 'POST',
                 body: formData,
@@ -79,20 +79,21 @@ const Trucks = () => {
     };
 
     const handleSearch = (query) => {
-        setSearchQuery(query);
+        setSearchQuery(query); 
     };
 
     const handleAddTruck = () => {
-        navigate('/add-truck');
+        navigate('/add-truck'); 
     };
 
     const handleCategoryClick = (category) => {
-        setSelectedCategory(category === selectedCategory ? '' : category);
+        setSelectedCategory(category === selectedCategory ? '' : category); 
     };
 
     return (
         <div className='container'>
             <SearchTrucks query={searchQuery} onSearch={handleSearch} />
+            
             <div className='header'>
                 <div className="category-buttons">
                     <button onClick={() => handleCategoryClick('trailer')}>Trailer</button>
@@ -100,17 +101,20 @@ const Trucks = () => {
                     <button onClick={() => handleCategoryClick('pickup')}>Pickup</button>
                 </div>
             </div>
+            
             <button onClick={handleAddTruck} className="add-truck-button">
                 Add Truck
             </button>
+            
             <div className="main">
                 <div className="data">
+                    {/* Display filtered trucks */}
                     {filteredTrucks.length > 0 ? (
                         filteredTrucks.map(truck => (
                             <TruckPage truck={truck} key={truck.id} />
                         ))
                     ) : (
-                        <p>No trucks available for the selected category.</p>
+                        <p>No trucks available for the selected category or search term.</p>
                     )}
                 </div>
             </div>
