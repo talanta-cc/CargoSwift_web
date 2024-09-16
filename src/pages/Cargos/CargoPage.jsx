@@ -3,12 +3,13 @@ import { useNavigate } from 'react-router-dom';
 import './Cargopage.css'; 
 import { DATAURLS } from '../../utils';
 import useGeoLocation from '../../hooks/useGeoLocation';
+import Search from './SearchCargo';
 
 const CargoPage = () => {
     const [cargos, setCargos] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
     const location = useGeoLocation();
 
     const fetchAvailableCargos = useCallback(async () => {
@@ -24,8 +25,8 @@ const CargoPage = () => {
                 throw new Error('Network response was not ok');
             }
             const data = await response.json();
-            console.log('API Response:', data); 
-            setCargos(data.data || []); 
+            console.log('API Response:', data); // Log response
+            setCargos(data.data || []); // Ensure cargos are set
         } catch (error) {
             console.error('Error fetching cargos:', error);
             setError('Failed to fetch cargos.');
@@ -35,7 +36,7 @@ const CargoPage = () => {
     }, [location]);
 
     useEffect(() => {
-        console.log('Current Location:', location.coordinates); 
+        console.log('Current Location:', location.coordinates); // Log coordinates
         if (location.loaded && !location.error) {
             fetchAvailableCargos();
         }
@@ -52,6 +53,7 @@ const CargoPage = () => {
     return (
         <div className="cargo-page">
             <h2>Available Cargos</h2>
+            {/* Uncomment if needed */}
             {/* <button onClick={() => navigate('/add-cargo')} className="add-cargo-button">Add Cargo</button> */}
             {cargos.length ? (
                 cargos.map(cargo => (
