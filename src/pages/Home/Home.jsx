@@ -109,3 +109,116 @@ function Home() {
 }
 
 export default Home;
+
+
+// import React, { useState, useEffect } from 'react';
+// import { useNavigate } from 'react-router-dom';
+// import './TrucksPage.css';
+// import TruckPage from './TruckPage';
+// import SearchTrucks from './SearchTrucks';
+// import { DATAURLS } from '../../utils';
+
+// const Trucks = () => {
+//     const [trucks, setTrucks] = useState([]);
+//     const [filteredTrucks, setFilteredTrucks] = useState([]);
+//     const [searchQuery, setSearchQuery] = useState('');
+//     const [selectedCategory, setSelectedCategory] = useState('');
+//     const navigate = useNavigate();
+
+//     useEffect(() => {
+//         fetchTrucks();
+//     }, []);
+
+//     useEffect(() => {
+//         if (searchQuery) {
+//             searchTrucksAPI();  // Call API for searching trucks
+//         } else if (selectedCategory) {
+//             filterTrucksByCategoryAPI();  // Call API for filtering trucks by category
+//         } else {
+//             setFilteredTrucks(trucks);  // Show all trucks if no query or category is selected
+//         }
+//     }, [searchQuery, selectedCategory, trucks]);
+
+//     const fetchTrucks = async () => {
+//         try {
+//             const response = await fetch(DATAURLS.URLS.vehicles);
+//             if (!response.ok) {
+//                 throw new Error('Network response was not ok');
+//             }
+//             const data = await response.json();
+//             console.log('Fetched Trucks:', data);
+//             setTrucks(data.data || []);
+//             setFilteredTrucks(data.data || []);
+//         } catch (error) {
+//             console.error('Error fetching trucks:', error);
+//         }
+//     };
+
+//     const searchTrucksAPI = async () => {
+//         try {
+//             const formData = new FormData();
+//             formData.append('search', searchQuery); // Add the search query to the request
+//             const response = await fetch(DATAURLS.URLS.searchVehicles, {
+//                 method: 'POST',
+//                 body: formData,
+//             });
+//             const data = await response.json();
+//             console.log('Searched Trucks:', data);
+//             setFilteredTrucks(data.data || []);
+//         } catch (error) {
+//             console.error('Error searching trucks:', error);
+//         }
+//     };
+
+//     const filterTrucksByCategoryAPI = async () => {
+//         try {
+//             const response = await fetch(`${DATAURLS.URLS.filterByCategory}/${selectedCategory}`);
+//             const data = await response.json();
+//             console.log('Filtered Trucks by Category:', data);
+//             setFilteredTrucks(data.data || []);
+//         } catch (error) {
+//             console.error('Error filtering trucks by category:', error);
+//         }
+//     };
+
+//     const handleSearch = (query) => {
+//         setSearchQuery(query); // Set the search query
+//     };
+
+//     const handleAddTruck = () => {
+//         navigate('/add-truck'); // Navigate to Add Truck page
+//     };
+
+//     const handleCategoryClick = (category) => {
+//         setSelectedCategory(category === selectedCategory ? '' : category); // Toggle category selection
+//     };
+
+//     return (
+//         <div className='container'>
+//             <SearchTrucks query={searchQuery} onSearch={handleSearch} />
+//             <div className='header'>
+//                 <div className="category-buttons">
+//                     <button onClick={() => handleCategoryClick('trailer')}>Trailer</button>
+//                     <button onClick={() => handleCategoryClick('semi-truck')}>Semi-Truck</button>
+//                     <button onClick={() => handleCategoryClick('pickup')}>Pickup</button>
+//                 </div>
+//             </div>
+//             <button onClick={handleAddTruck} className="add-truck-button">
+//                 Add Truck
+//             </button>
+//             <div className="main">
+//                 <div className="data">
+//                     {filteredTrucks.length > 0 ? (
+//                         filteredTrucks.map(truck => (
+//                             <TruckPage truck={truck} key={truck.id} />
+//                         ))
+//                     ) : (
+//                         <p>No trucks available for the selected category or search term.</p>
+//                     )}
+//                 </div>
+//             </div>
+//         </div>
+//     );
+// };
+
+// export default Trucks;

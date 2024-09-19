@@ -8,8 +8,8 @@ const AvailableCargos = () => {
     useEffect(() => {
         const fetchCargos = async () => {
             try {
-                const latitude = 0; // Replace with actual latitude
-                const longitude = 0; // Replace with actual longitude
+                const latitude = 0; 
+                const longitude = 0; 
                 const response = await fetch(`https://cargoswift.talantacomputerschool.com/api/cargos/home/${latitude}/${longitude}`);
                 
                 if (!response.ok) {
@@ -17,7 +17,7 @@ const AvailableCargos = () => {
                 }
                 
                 const data = await response.json();
-                setCargos(data.cargos || []); // Adjust based on actual response structure
+                setCargos(data.cargos || []);
             } catch (error) {
                 console.error('Error fetching cargos:', error);
                 setError('Failed to fetch cargos.');

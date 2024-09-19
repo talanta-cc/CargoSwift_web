@@ -3,12 +3,10 @@ import { Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Header from './components/Header';
 import Home from './pages/Home/Home';
-import About from './pages/AboutUs/About';
 import Login from './pages/Login/Login';
 import ForgotPassword from './pages/ForgotPassword/ForgotPassword'; 
 import SignUp from './pages/SignUp/Signup';
 import Footer from './pages/Footer/Footer';
-import Projects from './pages/Projects/Projects';
 import CargoPage from './pages/Cargos/CargoPage';
 import AddCargo from './pages/Cargos/AddCargo';
 import ProfilePage from './pages/Profile/ProfilePage/ProfilePage';
@@ -68,8 +66,6 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/trucks" element={<TrucksPage />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/projects" element={<Projects />} />
         <Route path="/cargopage" element={<CargoPage userId={user?.id} latitude={0} longitude={0} />} />
         <Route path="/login" element={<Login onLogin={handleLogin} />} />
         <Route path="/signup" element={<SignUp />} />

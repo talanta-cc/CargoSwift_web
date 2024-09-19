@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './TrucksPage.css';
 import TruckPage from './TruckPage';
 import SearchTrucks from './SearchTrucks';
+import { UserContext } from '../../App';
 
 const categoryMap = {
     'trailer': 1,
@@ -15,7 +16,11 @@ const Trucks = () => {
     const [filteredTrucks, setFilteredTrucks] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedCategory, setSelectedCategory] = useState('');
+    const [latitude, setLatitude] = useState(0);  
+    const [longitude, setLongitude] = useState(0);
     const navigate = useNavigate();
+
+    const { user } = useContext(UserContext); 
 
     useEffect(() => {
         fetchTrucks();
@@ -30,7 +35,6 @@ const Trucks = () => {
             setFilteredTrucks(trucks); 
         }
     }, [searchQuery, selectedCategory, trucks]);
-
     const fetchTrucks = async () => {
         try {
             const response = await fetch('https://cargoswift.talantacomputerschool.com/api/vehicles/home/5576/56454');
@@ -38,42 +42,45 @@ const Trucks = () => {
                 throw new Error('Network response was not ok');
             }
             const data = await response.json();
-            console.log('Fetched Trucks:', data);
             setTrucks(data.data || []);
             setFilteredTrucks(data.data || []);
         } catch (error) {
             console.error('Error fetching trucks:', error);
         }
     };
-
     const searchTrucks = async () => {
         try {
             const formData = new FormData();
-            formData.append('search', searchQuery); 
+            formData.append('search', searchQuery);  
             const response = await fetch('https://cargoswift.talantacomputerschool.com/api/vehicles', {
                 method: 'POST',
                 body: formData,
             });
             if (!response.ok) {
-                throw new Error('Network response was not ok');
+                throw new Error(`Network response was not ok, status: ${response.status}`);
             }
             const data = await response.json();
-            console.log('Searched Trucks:', data);
             setFilteredTrucks(data.data || []);
         } catch (error) {
             console.error('Error searching trucks:', error);
         }
     };
-
-    const filterTrucksByCategory = () => {
-        console.log('Filtering by Category:', selectedCategory);
+    const filterTrucksByCategory = async () => {
         const categoryID = categoryMap[selectedCategory];
         if (categoryID !== undefined) {
-            const filtered = trucks.filter(truck => truck.categoryID === categoryID);
-            console.log('Filtered Trucks by Category:', filtered);
-            setFilteredTrucks(filtered);
+            try {
+                const response = await fetch(
+                    `https://cargoswift.talantacomputerschool.com/api/vehicles/category/${latitude}/${longitude}/${categoryID}`
+                );
+                if (!response.ok) {
+                    throw new Error(`Network response was not ok, status: ${response.status}`);
+                }
+                const data = await response.json();
+                setFilteredTrucks(data.data || []);
+            } catch (error) {
+                console.error('Error filtering trucks by category:', error);
+            }
         } else {
-            console.log('Invalid category selected');
             setFilteredTrucks([]);
         }
     };
@@ -81,9 +88,8 @@ const Trucks = () => {
     const handleSearch = (query) => {
         setSearchQuery(query); 
     };
-
     const handleAddTruck = () => {
-        navigate('/add-truck'); 
+        navigate('/add-truck');
     };
 
     const handleCategoryClick = (category) => {
@@ -102,9 +108,11 @@ const Trucks = () => {
                 </div>
             </div>
             
-            <button onClick={handleAddTruck} className="add-truck-button">
-                Add Truck
-            </button>
+            {user?.role === 'trucker' && ( 
+                <button onClick={handleAddTruck} className="add-truck-button" id='truck_btn'>
+                    Add Truck
+                </button>
+            )}
             
             <div className="main">
                 <div className="data">

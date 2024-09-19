@@ -19,7 +19,7 @@ const haversineDistance = (coords1, coords2) => {
 
   const toRad = (value) => (value * Math.PI) / 180;
 
-  const R = 6371; 
+  const R = 6371;
   const dLat = toRad(coords2.lat - coords1.lat);
   const dLng = toRad(coords2.lng - coords1.lng);
   const a =
@@ -27,7 +27,7 @@ const haversineDistance = (coords1, coords2) => {
     Math.cos(toRad(coords1.lat)) * Math.cos(toRad(coords2.lat)) *
     Math.sin(dLng / 2) * Math.sin(dLng / 2);
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-  const distance = R * c; 
+  const distance = R * c;
   return distance;
 };
 
@@ -83,21 +83,21 @@ const MapPage = () => {
           ) : item.error ? (
             <p>{item.message}</p>
           ) : item.data ? (
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: '20px' }}>
-              <div style={{ flex: '0 0 100px', marginRight: '20px' }}>
-                <img 
+            <div className="map-content">
+              <div>
+              <img 
                   src={`${DATAURLS.BASEURL}${item.data?.image}`} 
-                  style={{ width: "100px", height: "200px", objectFit: 'cover' }} 
+                  style={{ width: "500px", height: "250px", objectFit: 'cover' }} 
                   alt="cargo" 
                 />
               </div>
-              <div style={{ flex: '1' }}>
+              <div>
                 <p>{item.data?.name}</p>
                 <a href={`tel:${item.data?.phone}`}>Call: {item.data?.phone}</a><br />
                 <a href={`mailto:${item.data?.email}`}>Email: {item.data?.email}</a>
                 <p>Distance from truck: {item.data?.distance}</p>
                 <Link to={"/add-cargo"}>
-                  <button>Add Shipment</button>
+                  <button id="truck_btn">Add Shipment</button>
                 </Link>
               </div>
             </div>
@@ -113,4 +113,3 @@ const MapPage = () => {
 };
 
 export default MapPage;
-

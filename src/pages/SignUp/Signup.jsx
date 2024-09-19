@@ -11,7 +11,7 @@ function Signup() {
     username: "",
     email: "",
     phone_number: "",
-    role: "user", // Default to "user"
+    role: "user",
     password: "",
     confirmPassword: "",
   });
