@@ -1,4 +1,3 @@
-/* General Styles */
 body {
     font-family: 'Arial', sans-serif;
     background-color: #f0f2f5;
@@ -11,8 +10,6 @@ body {
     margin: 30px auto;
     padding: 0 15px;
 }
-
-/* Header Styles */
 .header {
     background-color: #f8f8f8;
     padding: 20px;
@@ -39,20 +36,17 @@ body {
     min-width: 150px;
 }
 
-/* Modern color for select button */
 .header select {
-    background-color: #ffffff; /* Light background for select */
-    color: #333; /* Dark text for contrast */
-    border-color: #007bff; /* Blue border color */
-    transition: background-color 0.3s, border-color 0.3s; /* Smooth transition */
+    background-color: #ffffff; 
+    color: #333; 
+    border-color: #007bff;
+    transition: background-color 0.3s, border-color 0.3s; 
 }
 
 .header select:hover {
-    background-color: #f0f8ff; /* Light blue on hover */
-    border-color: #0056b3; /* Darker blue on hover */
+    background-color: #f0f8ff; 
+    border-color: #0056b3; 
 }
-
-/* Modern button styling */
 .header button {
     background-color: #007bff;
     color: white;
@@ -63,11 +57,9 @@ body {
 .header button:hover {
     background-color: #0056b3;
 }
-
-/* Custom Styling for truck_btn */
 #truck_btn {
-    background-color: #28a745; /* Green background for modern look */
-    color: white; /* White text */
+    background-color: #28a745; 
+    color: white;
     border: none;
     padding: 10px 20px;
     text-align: center;
@@ -80,16 +72,14 @@ body {
 }
 
 #truck_btn:hover {
-    background-color: #218838; /* Darker green on hover */
+    background-color: #218838; 
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
 
 #truck_btn:active {
-    background-color: #1e7e34; /* Even darker green on click */
+    background-color: #1e7e34; 
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3) inset;
 }
-
-/* Main Layout */
 .main {
     display: flex;
     flex-wrap: wrap;
@@ -162,8 +152,6 @@ body {
     justify-content: space-between;
     gap: 20px;
 }
-
-/* Category Buttons */
 .category-buttons {
     display: flex;
     gap: 10px;
@@ -191,7 +179,6 @@ body {
     color: white;
 }
 
-/* Search Bar Styles */
 .search-container {
     display: flex;
     justify-content: center;
@@ -231,7 +218,6 @@ body {
     background-color: #0056b3;
 }
 
-/* Responsive Styles */
 @media (max-width: 1024px) {
     .main {
         flex-direction: column;

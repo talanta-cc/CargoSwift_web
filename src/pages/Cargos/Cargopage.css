@@ -1,4 +1,4 @@
-.cargo-page{
+.cargo-page {
   margin-right: 10%;
   margin-left: 10%;
 }
@@ -16,8 +16,12 @@
   margin-bottom: 20px;
   color: #333;
 }
-
-.add-cargo-form input, .add-cargo-form select, .add-cargo-form textarea, .user-cargos input, .user-cargos select, .user-cargos textarea {
+.add-cargo-form input, 
+.add-cargo-form select, 
+.add-cargo-form textarea, 
+.user-cargos input, 
+.user-cargos select, 
+.user-cargos textarea {
   width: 100%;
   padding: 10px;
   margin-bottom: 15px;
@@ -26,7 +30,6 @@
   font-size: 16px;
   box-sizing: border-box;
 }
-
 .add-cargo-form button {
   width: 100%;
   padding: 10px;
@@ -42,13 +45,13 @@
 .add-cargo-form button:hover {
   background-color: #0056b3;
 }
-
-.add-cargo-form input:focus, .add-cargo-form select:focus, .add-cargo-form textarea:focus {
+.add-cargo-form input:focus, 
+.add-cargo-form select:focus, 
+.add-cargo-form textarea:focus {
   outline: none;
   border-color: #007bff;
   box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
 }
-
 .cargo-item {
   padding: 15px;
   margin-bottom: 15px;
@@ -78,6 +81,7 @@
   margin-bottom: 5px;
   color: #555;
 }
+
 @media (min-width: 600px) {
   .cargo-item {
     flex-direction: row;

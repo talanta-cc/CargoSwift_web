@@ -108,7 +108,6 @@ const Trucks = () => {
             
             <div className="main">
                 <div className="data">
-                    {/* Display filtered trucks */}
                     {filteredTrucks.length > 0 ? (
                         filteredTrucks.map(truck => (
                             <TruckPage truck={truck} key={truck.id} />

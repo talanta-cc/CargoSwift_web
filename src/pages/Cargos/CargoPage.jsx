@@ -25,8 +25,8 @@ const CargoPage = () => {
                 throw new Error('Network response was not ok');
             }
             const data = await response.json();
-            console.log('API Response:', data); // Log response
-            setCargos(data.data || []); // Ensure cargos are set
+            console.log('API Response:', data);
+            setCargos(data.data || []); 
         } catch (error) {
             console.error('Error fetching cargos:', error);
             setError('Failed to fetch cargos.');
@@ -36,7 +36,7 @@ const CargoPage = () => {
     }, [location]);
 
     useEffect(() => {
-        console.log('Current Location:', location.coordinates); // Log coordinates
+        console.log('Current Location:', location.coordinates);
         if (location.loaded && !location.error) {
             fetchAvailableCargos();
         }
@@ -53,8 +53,6 @@ const CargoPage = () => {
     return (
         <div className="cargo-page">
             <h2>Available Cargos</h2>
-            {/* Uncomment if needed */}
-            {/* <button onClick={() => navigate('/add-cargo')} className="add-cargo-button">Add Cargo</button> */}
             {cargos.length ? (
                 cargos.map(cargo => (
                     <div key={cargo.id} className="cargo-item">
