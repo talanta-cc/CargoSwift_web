@@ -24,7 +24,7 @@ const TruckPage = ({ truck }) => {
             <small>{truck.startLocation}</small>
           </div>
           <div className="middle">
-            <p>===</p>
+            {/* <p>===</p> */}
             <small>{truck.duration}</small>
           </div>
           <div className="stop">
@@ -33,7 +33,7 @@ const TruckPage = ({ truck }) => {
           </div>
         </div>
         <div className="col">
-          <p>$ {truck.price}</p>
+          {/* <p>$ {truck.price}</p> */}
           {Array.isArray(truck.offDays) && (
             <p>
               Off Days: <span>{truck.offDays.map(day => <span key={day}>{day} </span>)}</span>

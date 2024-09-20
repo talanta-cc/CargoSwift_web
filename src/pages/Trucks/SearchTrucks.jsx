@@ -1,24 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
+import './TrucksPage.css';
 
+const SearchTrucks = ({ query, onSearch }) => {
+  const [searchTerm, setSearchTerm] = useState(query);
 
-const SearchTrucks = ({ onSearch }) => {
-    const [query, setQuery] = useState('');
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    onSearch(searchTerm); 
+  };
 
-    const handleSearch = () => {
-        onSearch(query);
-    };
-
-    return (
-        <div className="search-trucks">
-            <input 
-                type="text" 
-                placeholder="Search trucks..." 
-                value={query} 
-                onChange={(e) => setQuery(e.target.value)} 
-            />
-            <button onClick={handleSearch}>Search</button>
-        </div>
-    );
+  return (
+    <div className="search-container">
+      <form onSubmit={handleSubmit} className="search-bar">
+        <input
+          type="text"
+          placeholder="Search Trucks..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+        <button type="submit">Search</button>
+      </form>
+    </div>
+  );
 };
 
 export default SearchTrucks;

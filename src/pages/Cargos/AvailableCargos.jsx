@@ -1,30 +1,43 @@
 import React, { useEffect, useState } from 'react';
 import './Cargopage.css';
 
-const AvailableCargos = ({ latitude, longitude }) => {
+const AvailableCargos = () => {
     const [cargos, setCargos] = useState([]);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
         const fetchCargos = async () => {
             try {
-                const response = await fetch(`https://cargoswift.talantacomputerschool.com/api/cargos/home/35786/2152`);
+                const latitude = 0; 
+                const longitude = 0; 
+                const response = await fetch(`https://cargoswift.talantacomputerschool.com/api/cargos/home/${latitude}/${longitude}`);
+                
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                
                 const data = await response.json();
-                setCargos(data);
+                setCargos(data.cargos || []);
             } catch (error) {
-                console.error("Error fetching cargos:", error);
+                console.error('Error fetching cargos:', error);
+                setError('Failed to fetch cargos.');
             }
         };
+
         fetchCargos();
-    }, [latitude, longitude]);
+    }, []);
 
     return (
         <div>
             <h2>Available Cargos</h2>
+            {error && <p className="error-message">{error}</p>}
             {cargos.length ? (
                 cargos.map(cargo => (
-                    <div key={cargo.id}>
+                    <div key={cargo.id} className="cargo-item">
                         <h3>{cargo.description}</h3>
-                        <p>{cargo.estimated_size}</p>
+                        <p>Estimated Size: {cargo.estimated_size} {cargo.measurement_unit}</p>
+                        <p>Location: {cargo.cargoLocation}</p>
+                        <p>Receiver: {cargo.receiverName}, {cargo.receiverPhone}</p>
                     </div>
                 ))
             ) : (

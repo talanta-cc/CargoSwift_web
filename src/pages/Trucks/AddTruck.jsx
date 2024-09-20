@@ -125,7 +125,7 @@ const AddTruck = ({ loginInfo }) => {
             <input type="text" name="tonnage" value={truckDetails.tonnage} onChange={handleChange} placeholder="Tonnage" />
             <input type="text" name="description" value={truckDetails.description} onChange={handleChange} placeholder="Description" />
             <input type="file" name="images" onChange={handleChange} accept="image/*" />
-            <button type="submit">Add Truck</button>
+            <button id='truck_btn' type="submit">Add Truck</button>
         </form>
     );
 };
