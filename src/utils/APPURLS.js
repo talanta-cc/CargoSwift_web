@@ -9,4 +9,6 @@ export const URLS = {
     userCargos:`${APIURL}/cargos/cargos-own`,
     addCargo:`${APIURL}/cargos/add`,
     categories:`${APIURL}/categories`,
+    searchCargos:`${APIURL}/search/cargos`,
+    searchVehicles:`${APIURL}/serach/vehicles`,
 }

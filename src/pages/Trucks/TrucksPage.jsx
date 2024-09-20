@@ -4,6 +4,7 @@ import './TrucksPage.css';
 import TruckPage from './TruckPage';
 import SearchTrucks from './SearchTrucks';
 import { UserContext } from '../../App';
+import { DATAURLS } from '../../utils';
 
 const categoryMap = {
     'trailer': 1,
@@ -37,7 +38,7 @@ const Trucks = () => {
     }, [searchQuery, selectedCategory, trucks]);
     const fetchTrucks = async () => {
         try {
-            const response = await fetch('https://cargoswift.talantacomputerschool.com/api/vehicles/home/5576/56454');
+            const response = await fetch(`https://cargoswift.talantacomputerschool.com/api/vehicles/home/${latitude}/${longitude}`);
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
@@ -52,7 +53,7 @@ const Trucks = () => {
         try {
             const formData = new FormData();
             formData.append('search', searchQuery);  
-            const response = await fetch('https://cargoswift.talantacomputerschool.com/api/vehicles', {
+            const response = await fetch(DATAURLS.URLS.searchVehicles, {
                 method: 'POST',
                 body: formData,
             });
