@@ -162,7 +162,7 @@ body {
     height:60vh;
     background-color: red;
     background-image: url('../../assets/images/homebackgroundcargo.jpg');
-    /* background-image: url(C:\Js\React\CargoSwift_web\src\assets\images\hamburg-3021820_1920.jpg);        */
+    
     background-position: center center;
     background-repeat:repeat;
 }
@@ -174,9 +174,9 @@ body {
 }
 .mini-image{
     width: 100%;
-    /* background-image: url(C:\Js\React\CargoSwift_web\src\assets\images\transport-plane-4689903_1920.jpg); */
+    
     background-position:center left; 
-} */
+} 
 .mini-image .plane-img{
     width:60vw;
     height:30vh;
